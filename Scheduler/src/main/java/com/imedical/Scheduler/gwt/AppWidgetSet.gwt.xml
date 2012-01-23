@@ -9,4 +9,6 @@
 	
 	<inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
     
+
+    
 </module>
