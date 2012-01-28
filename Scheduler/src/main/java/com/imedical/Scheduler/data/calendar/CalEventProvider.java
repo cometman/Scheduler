@@ -12,7 +12,7 @@ import com.imedical.Scheduler.data.PatientVO;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.event.CalendarEventProvider;
 
-public class CalEventProvider implements CalendarEventProvider {
+public class CalEventProvider implements CalendarEventProvider{
 
 	private static final long serialVersionUID = 1550248810556339270L;
 

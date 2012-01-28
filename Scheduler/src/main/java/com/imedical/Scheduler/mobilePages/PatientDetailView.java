@@ -2,6 +2,7 @@ package com.imedical.Scheduler.mobilePages;
 
 import com.imedical.Scheduler.data.PatientDetailPanel;
 import com.imedical.Scheduler.data.PatientForm;
+import com.imedical.Scheduler.data.PatientTable;
 import com.imedical.Scheduler.data.PatientVO;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;

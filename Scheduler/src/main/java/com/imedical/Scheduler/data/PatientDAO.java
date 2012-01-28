@@ -22,7 +22,7 @@ public class PatientDAO implements IPatientDAO {
 		patient1.setFirstName("Clay");
 		patient1.setLastName("Selby");
 		patient1.setAge(22);
-		gCal.add(Calendar.DAY_OF_WEEK, 1);
+		gCal.set(Calendar.HOUR_OF_DAY, 15);
 		patient1.setNextAppointment(gCal.getTime());
 
 		PatientVO patient2 = new PatientVO();
@@ -30,6 +30,7 @@ public class PatientDAO implements IPatientDAO {
 		patient2.setLastName("Selby");
 		patient2.setAge(25);
 		gCal.add(Calendar.DAY_OF_WEEK, 1);
+		gCal.set(Calendar.HOUR_OF_DAY, 10);
 		patient2.setNextAppointment(gCal.getTime());
 
 		patientList.add(patient2);

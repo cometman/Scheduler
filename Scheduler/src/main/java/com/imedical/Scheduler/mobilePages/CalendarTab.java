@@ -10,6 +10,7 @@ public class CalendarTab extends NavigationView {
 			panel = new CalendarPanel();
 		}
 		setContent(panel);
+		this.setCaption("Calendar");
 		
 
 	}

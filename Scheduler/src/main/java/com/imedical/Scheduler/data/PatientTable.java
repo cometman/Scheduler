@@ -1,10 +1,7 @@
 package com.imedical.Scheduler.data;
 
-import com.imedical.Scheduler.mobilePages.PatientDetailView;
 import com.imedical.Scheduler.mobilePages.PatientTab;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Button;
@@ -14,12 +11,11 @@ public class PatientTable extends NavigationManager {
 	private Table table;
 	private PatientContainer patientContainer = new PatientContainer();
 	private NavigationManager navigationManger;
-	private PatientDetailView patientView = null;
-	private PatientTab patientTab = null;
+	private PatientTab patientTab;
 
-	public PatientTable() {
-		Button testButton = new Button("test");
-
+	public PatientTable(PatientTab appRef) {
+		patientTab = appRef;
+		//
 		// Add these columns as temporary - Replace with container
 		getTable().addContainerProperty("First Name", String.class, "");
 		table.addContainerProperty("Last Name", String.class, "");
@@ -28,7 +24,7 @@ public class PatientTable extends NavigationManager {
 		table.setSelectable(true);
 		table.setSizeFull();
 		table.setImmediate(true);
-		table.setContainerDataSource(patientContainer.loadData());
+		table.setContainerDataSource(patientContainer.loadInitialData());
 		table.setVisibleColumns(PatientContainer.NATUAL_COL_ORDER);
 		table.setColumnHeaders(PatientContainer.COL_HEADERS_ENGLISH);
 
@@ -36,11 +32,9 @@ public class PatientTable extends NavigationManager {
 			private static final long serialVersionUID = 1L;
 
 			public void valueChange(ValueChangeEvent event) {
-
 				if (table.getValue() != null) {
 					PatientVO patient = (PatientVO) table.getValue();
-					patientTab.navigateTo(patientView = new PatientDetailView(
-							patient));
+					patientTab.showDetailView(patient);
 				}
 			}
 		});
@@ -53,10 +47,4 @@ public class PatientTable extends NavigationManager {
 		}
 		return table;
 	}
-
-	public PatientTab setInstance(PatientTab tab) {
-		patientTab = tab;
-		return patientTab;
-	}
-
 }

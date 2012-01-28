@@ -3,11 +3,15 @@ package com.imedical.Scheduler.data.calendar;
 import java.util.Date;
 
 import com.vaadin.addon.calendar.ui.Calendar;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarTargetDetails;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
+
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.terminal.gwt.client.ui.ClickEventHandler;
 import com.vaadin.ui.Table.TableTransferable;
 
 public class MainCalendar extends Calendar {
@@ -21,9 +25,6 @@ public class MainCalendar extends Calendar {
 		eventProvider = new CalEventProvider();
 
 		this.setEventProvider(eventProvider);
-
-		System.out.println(this.getEventProvider().getEvents(new Date(),
-				new Date()));
 	}
 
 	public Calendar createCalendar() {
