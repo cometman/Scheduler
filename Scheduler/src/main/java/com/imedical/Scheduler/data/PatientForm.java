@@ -15,18 +15,14 @@ public class PatientForm extends Form implements Serializable {
 
 	public PatientForm(PatientVO patient) {
 
-		this.setCaption("Patient Form");
-		this.setDescription("Description");
 		BeanItem<PatientVO> patientBean = new BeanItem<PatientVO>(patient);
 		this.setItemDataSource(patientBean);
 		setEditStatus(false);
-
 		for (Object o : patientBean.getItemPropertyIds()) {
 			this.getField(o).setReadOnly(true);
 		}
 
 		referenceBean = patientBean;
-		System.out.println(referenceBean.getBean().getFirstName());
 
 	}
 
@@ -36,14 +32,12 @@ public class PatientForm extends Form implements Serializable {
 	}
 
 	public void setEditStatus(boolean value) {
-//		for (Object o : referenceBean.getItemPropertyIds()) {
-//			this.getField(o).setReadOnly(value);
-//		}
+		// for (Object o : referenceBean.getItemPropertyIds()) {
+		// this.getField(o).setReadOnly(value);
+		// }
 	}
 
 	public void setPatient(PatientVO patients) {
-		System.out.println("test");
-		System.out.println("testing" + patients.getFirstName());
 		this.patient = patients;
 
 	}

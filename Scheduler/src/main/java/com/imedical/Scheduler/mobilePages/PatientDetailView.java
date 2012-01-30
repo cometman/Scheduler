@@ -4,11 +4,14 @@ import com.imedical.Scheduler.data.PatientDetailPanel;
 import com.imedical.Scheduler.data.PatientForm;
 import com.imedical.Scheduler.data.PatientTable;
 import com.imedical.Scheduler.data.PatientVO;
+import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class PatientDetailView extends NavigationView {
 	private static final long serialVersionUID = -6881253381664450543L;
@@ -18,6 +21,9 @@ public class PatientDetailView extends NavigationView {
 	public PatientDetailView(PatientVO patient) {
 
 		patientPanel = new PatientDetailPanel(patient);
+		this.setCaption(patient.getFirstName() + " " + patient.getLastName());
+
+		this.getLeftComponent().setCaption("Back");
 
 		setContent(patientPanel);
 

@@ -1,11 +1,8 @@
 package com.imedical.Scheduler.data.calendar;
 
-import java.text.DateFormat;
-import java.text.DateFormat.Field;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-
+import com.imedical.Scheduler.mobilePages.EventPopover;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
@@ -23,23 +20,41 @@ public class CalendarPanel extends Panel implements ClickListener {
 	private Button weekView = new Button("Week", this);
 	private Button dayView = new Button("Day", this);
 	private GregorianCalendar gregCalendar = new GregorianCalendar();
+	private EventPopover eventPopover;
 
 	public CalendarPanel() {
 		VerticalLayout verticalLayout = new VerticalLayout();
 		verticalLayout.setSizeFull();
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.addComponent(weekView);
-		horizontalLayout.addComponent(dayView);
+
 		if (mainCalendar == null) {
 			buildMainCalendar();
 		}
 		verticalLayout.addComponent(mainCalendar);
-		horizontalLayout.setComponentAlignment(weekView, Alignment.TOP_LEFT);
-		horizontalLayout.setComponentAlignment(dayView, Alignment.TOP_RIGHT);
+		addComponent(verticalLayout);
+		addComponent(horizontalLayout);
+
+		horizontalLayout.addComponent(weekView);
+		horizontalLayout.addComponent(dayView);
+		horizontalLayout.setComponentAlignment(weekView, Alignment.BOTTOM_LEFT);
+		horizontalLayout.setComponentAlignment(dayView, Alignment.BOTTOM_RIGHT);
 		verticalLayout.setComponentAlignment(mainCalendar,
 				Alignment.MIDDLE_CENTER);
-		addComponent(horizontalLayout);
-		addComponent(verticalLayout);
+
+		mainCalendar.setHandler(new EventClickHandler() {
+
+			@Override
+			public void eventClick(EventClick event) {
+				CalEventProvider calEventProvider = mainCalendar
+						.returnEventProvider();
+				AppointmentEvent appointmentEvent = calEventProvider
+						.getAppointmentByStartAndCaption(event
+								.getCalendarEvent());
+				eventPopover = new EventPopover(appointmentEvent);
+				getWindow().addWindow(eventPopover);
+
+			}
+		});
 
 	}
 
@@ -48,22 +63,23 @@ public class CalendarPanel extends Panel implements ClickListener {
 
 		mainCalendar.setVisibleHoursOfDay(8, 17);
 
-		mainCalendar.setWidth("90%");
-		mainCalendar.setHeight("100%");
-
+		mainCalendar.setSizeFull();
+		mainCalendar.setStartDate(gregCalendar.getTime());
+		mainCalendar.setEndDate(gregCalendar.getTime());
 		// Add the event listeners to the calendar here!
-		mainCalendar.setHandler(new EventClickHandler() {
+		// mainCalendar.setHandler(new EventClickHandler() {
+		//
+		// public void eventClick(EventClick event) {
+		// getWindow().addWindow(createPopover(event.getCalendarEvent()));
+		//
+		// }
+		// });
 
-			public void eventClick(EventClick event) {
-				getWindow().addWindow(createPopover(event.getCalendarEvent()));
-
-			}
-		});
 		return mainCalendar;
 	}
 
-	private void updateCalendar() {
-
+	public MainCalendar getMainCalendar() {
+		return mainCalendar;
 	}
 
 	@Override
@@ -89,7 +105,7 @@ public class CalendarPanel extends Panel implements ClickListener {
 		Panel popoverPanel = new Panel();
 		popoverPanel.setCaption(event.getCaption());
 		eventPopover.setContent(popoverPanel);
-		popoverPanel.setSt
 		return eventPopover;
 	}
+
 }

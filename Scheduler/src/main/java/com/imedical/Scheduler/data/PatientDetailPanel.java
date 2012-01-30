@@ -15,10 +15,8 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	private Button editInfo = new Button("Edit", this);
 
 	public PatientDetailPanel(PatientVO patient) {
-
 		patientForm = new PatientForm(patient);
 
-		
 		addComponent(patientForm);
 		addComponent(editInfo);
 

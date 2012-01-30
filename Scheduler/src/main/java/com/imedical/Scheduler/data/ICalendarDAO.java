@@ -6,4 +6,5 @@ import com.vaadin.addon.calendar.event.CalendarEvent;
 
 public interface ICalendarDAO {
 	public List<CalendarEvent> getAllCalendarEvents(String userid);
+
 }

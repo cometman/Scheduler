@@ -67,15 +67,14 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 			}
 		}
 		String result = null;
-		System.out.println("Size" + methodsToUse.length);
 		for (PatientVO p : patients) {
 			for (Method m : methodsToUse) {
 				if (m != null) {
 					if (m.invoke(p) == null) {
 						System.out.println("null");
 					} else {
-						result = (String) m.invoke(p).toString().toLowerCase();
-
+						result = (String) m.invoke(p).toString();
+						System.out.println(result +"stuff");
 						if (result.contains(s)) {
 							if (!filteredContainer.containsId(p)) {
 								filteredContainer.addBean(p);

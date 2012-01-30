@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
+import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+
 public class PatientDAO implements IPatientDAO {
 
 	private List<PatientVO> patientList = new ArrayList<PatientVO>();
@@ -17,23 +19,26 @@ public class PatientDAO implements IPatientDAO {
 
 	public List<PatientVO> getAllPatients() {
 		// Test Patients
+		AppointmentEvent testAppointment = new AppointmentEvent();
+
 		GregorianCalendar gCal = new GregorianCalendar();
 		PatientVO patient1 = new PatientVO();
 		patient1.setFirstName("Clay");
 		patient1.setLastName("Selby");
 		patient1.setAge(22);
+		patient1.setPhoneNumber("3256687007");
+		patient1.setAge(22);
 		gCal.set(Calendar.HOUR_OF_DAY, 15);
-		patient1.setNextAppointment(gCal.getTime());
 
-		PatientVO patient2 = new PatientVO();
-		patient2.setFirstName("Todd");
-		patient2.setLastName("Selby");
-		patient2.setAge(25);
-		gCal.add(Calendar.DAY_OF_WEEK, 1);
-		gCal.set(Calendar.HOUR_OF_DAY, 10);
-		patient2.setNextAppointment(gCal.getTime());
+		testAppointment.setPatientVO(patient1);
+		gCal.set(Calendar.HOUR_OF_DAY, 12);
+		testAppointment.setStart(gCal.getTime());
+		gCal.add(Calendar.HOUR, 1);
+		testAppointment.setEnd(gCal.getTime());
+		testAppointment.setCaption("New Test apointment");
+		testAppointment.setDescription("THe new description for the test");
+		patient1.addAppointment(testAppointment);
 
-		patientList.add(patient2);
 		patientList.add(patient1);
 
 		return patientList;

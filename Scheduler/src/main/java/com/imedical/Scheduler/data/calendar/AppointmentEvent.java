@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.imedical.Scheduler.data.PatientVO;
 import com.vaadin.addon.calendar.event.CalendarEventEditor;
 import com.vaadin.addon.calendar.event.CalendarEvent.EventChangeNotifier;
 
-public class CustomEvent implements CalendarEventEditor, EventChangeNotifier {
+public class AppointmentEvent implements CalendarEventEditor,
+		EventChangeNotifier {
 
 	private static final long serialVersionUID = -7057468551667781922L;
 
 	private Date start;
 	private Date end;
 	private String caption;
-	private String description;
+	private String appointmentReason;
 	private String styleName;
 	private boolean isAllDay;
 	private List<EventChangeListener> listeners = new ArrayList<EventChangeListener>();
+	private PatientVO patientVO;
 
 	public Date getStart() {
 		return start;
@@ -32,7 +35,7 @@ public class CustomEvent implements CalendarEventEditor, EventChangeNotifier {
 	}
 
 	public String getDescription() {
-		return description;
+		return appointmentReason;
 	}
 
 	public String getStyleName() {
@@ -50,7 +53,7 @@ public class CustomEvent implements CalendarEventEditor, EventChangeNotifier {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.appointmentReason = description;
 		fireEventChange();
 	}
 
@@ -89,5 +92,15 @@ public class CustomEvent implements CalendarEventEditor, EventChangeNotifier {
 			listener.eventChange(event);
 		}
 	}
+
+	public PatientVO getPatientVO() {
+		return patientVO;
+	}
+
+	public void setPatientVO(PatientVO patientVO) {
+		this.patientVO = patientVO;
+	}
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.imedical.Scheduler.data.calendar;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
@@ -17,7 +18,7 @@ import com.vaadin.ui.Table.TableTransferable;
 public class MainCalendar extends Calendar {
 
 	private static final long serialVersionUID = 7876830444596538956L;
-
+	private GregorianCalendar gregCalendar = new GregorianCalendar();
 	private CalEventProvider eventProvider;
 
 	public MainCalendar() {
@@ -48,8 +49,14 @@ public class MainCalendar extends Calendar {
 				TableTransferable transferable = (TableTransferable) event
 						.getTransferable();
 			}
+
 		});
 
 		return calendar;
 	}
+
+	public CalEventProvider returnEventProvider() {
+		return eventProvider;
+	}
+
 }

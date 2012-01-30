@@ -27,25 +27,31 @@ public class PatientTab extends NavigationManager {
 	private static final long serialVersionUID = -3244374618085945750L;
 
 	private Panel contentPanel = new Panel();
-	private PatientTable patientTable;
 	private PatientTab instance;
 	private PatientDetailView patientDetailView;
 	private PatientContainer patientContainer = new PatientContainer();
 	private TextField searchBar = new TextField();
+	private PatientTable patientTable;
 
 	public PatientTab() {
 		if (instance == null) {
 			instance = this;
 			patientTable = new PatientTable(instance);
-			buildView();
 		}
+		buildView();
 
 		searchBar.addListener(new TextChangeListener() {
+
+			private static final long serialVersionUID = -7982739247858478256L;
 
 			public void textChange(TextChangeEvent event) {
 				try {
 					patientTable.getTable().setContainerDataSource(
 							patientContainer.loadFilteredData(event.getText()));
+					patientTable.getTable().setVisibleColumns(
+							PatientContainer.NATUAL_COL_ORDER);
+					patientTable.getTable().setColumnHeaders(
+							PatientContainer.COL_HEADERS_ENGLISH);
 				} catch (IllegalAccessException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -56,7 +62,6 @@ public class PatientTab extends NavigationManager {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("test" + event.getText());
 
 			}
 		});
@@ -66,7 +71,6 @@ public class PatientTab extends NavigationManager {
 	}
 
 	public void buildView() {
-
 		contentPanel.addComponent(searchBar);
 		contentPanel.addComponent(patientTable.getTable());
 		navigateTo(contentPanel);

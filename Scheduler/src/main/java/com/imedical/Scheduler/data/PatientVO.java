@@ -1,6 +1,10 @@
 package com.imedical.Scheduler.data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 
 public class PatientVO {
 	private int uniqueId;
@@ -9,12 +13,11 @@ public class PatientVO {
 	private String middleName;
 	private int age;
 	private String phoneNumber;
-	private String reasonForVisit;
 	private String referral;
 	private String paymentType;
 	// private List<Note> patientNotes = new ArrayList<Note>();
-	private Date nextAppointment;
 	private String email;
+	private List<AppointmentEvent> appointments = new ArrayList<AppointmentEvent>();
 
 	public String getFirstName() {
 		return firstName;
@@ -56,14 +59,6 @@ public class PatientVO {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getReasonForVisit() {
-		return reasonForVisit;
-	}
-
-	public void setReasonForVisit(String reasonForVisit) {
-		this.reasonForVisit = reasonForVisit;
-	}
-
 	public String getReferral() {
 		return referral;
 	}
@@ -88,14 +83,6 @@ public class PatientVO {
 	// this.patientNotes = patientNotes;
 	// }
 
-	public Date getNextAppointment() {
-		return nextAppointment;
-	}
-
-	public void setNextAppointment(Date nextAppointment) {
-		this.nextAppointment = nextAppointment;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -110,6 +97,34 @@ public class PatientVO {
 
 	public void setUniqueId(int uniqueId) {
 		this.uniqueId = uniqueId;
+	}
+
+	public List<AppointmentEvent> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<AppointmentEvent> appointments) {
+		this.appointments = appointments;
+	}
+
+	public void addAppointment(AppointmentEvent appointment) {
+		this.appointments.add(appointment);
+	}
+
+	public AppointmentEvent getNextAppointmentEvent() {
+		AppointmentEvent event = null;
+		Date todaysDate = new Date();
+
+		for (AppointmentEvent e : getAppointments()) {
+			if (e.getStart().after(todaysDate)) {
+				if (event == null) {
+					event = e;
+				} else if (e.getStart().before(event.getStart())) {
+					event = e;
+				}
+			}
+		}
+		return event;
 	}
 
 }
