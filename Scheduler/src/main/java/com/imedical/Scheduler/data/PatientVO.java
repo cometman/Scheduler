@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+import com.vaadin.addon.calendar.event.CalendarEvent;
 
 public class PatientVO {
 	private int uniqueId;
@@ -111,7 +112,7 @@ public class PatientVO {
 		this.appointments.add(appointment);
 	}
 
-	public AppointmentEvent getNextAppointmentEvent() {
+	public Date getNextAppointmentEvent() {
 		AppointmentEvent event = null;
 		Date todaysDate = new Date();
 
@@ -124,7 +125,13 @@ public class PatientVO {
 				}
 			}
 		}
-		return event;
+
+		if (event != null) {
+			return event.getStart();
+		} else {
+			return null;
+		}
+
 	}
 
 }

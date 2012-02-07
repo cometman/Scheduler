@@ -3,6 +3,7 @@ package com.imedical.Scheduler.data.calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.imedical.Scheduler.MyVaadinApplication;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.addon.calendar.ui.CalendarTargetDetails;

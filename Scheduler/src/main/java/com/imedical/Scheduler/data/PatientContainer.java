@@ -19,9 +19,9 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 	private static List<PatientVO> patients = new ArrayList<PatientVO>();
 	private PatientContainer patientContainer;
 	public static final Object[] NATUAL_COL_ORDER = new Object[] { "firstName",
-			"lastName", "phoneNumber", "nextAppointment" };
+			"lastName", "phoneNumber" };
 	public static final String[] COL_HEADERS_ENGLISH = new String[] {
-			"First name", "Last name", "Phone", "Next appt." };
+			"First name", "Last name", "Phone"};
 
 	public PatientContainer() throws IllegalArgumentException {
 		super(PatientVO.class);
@@ -71,14 +71,11 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 			for (Method m : methodsToUse) {
 				if (m != null) {
 					if (m.invoke(p) == null) {
-						System.out.println("null");
 					} else {
 						result = (String) m.invoke(p).toString();
-						System.out.println(result +"stuff");
 						if (result.contains(s)) {
 							if (!filteredContainer.containsId(p)) {
 								filteredContainer.addBean(p);
-								System.out.println(p.getFirstName());
 							}
 						} else {
 

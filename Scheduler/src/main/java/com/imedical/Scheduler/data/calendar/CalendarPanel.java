@@ -2,7 +2,10 @@ package com.imedical.Scheduler.data.calendar;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.mobilePages.EventPopover;
+import com.imedical.model.ProviderModel;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
@@ -45,6 +48,8 @@ public class CalendarPanel extends Panel implements ClickListener {
 
 			@Override
 			public void eventClick(EventClick event) {
+				ProviderModel prop = (ProviderModel) MyVaadinApplication.get()
+						.getUser();
 				CalEventProvider calEventProvider = mainCalendar
 						.returnEventProvider();
 				AppointmentEvent appointmentEvent = calEventProvider

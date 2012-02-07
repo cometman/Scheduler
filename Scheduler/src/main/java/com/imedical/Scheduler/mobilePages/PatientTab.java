@@ -1,25 +1,15 @@
 package com.imedical.Scheduler.mobilePages;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.DateFormat;
-
 import com.imedical.Scheduler.data.PatientContainer;
-import com.imedical.Scheduler.data.PatientForm;
 import com.imedical.Scheduler.data.PatientTable;
 import com.imedical.Scheduler.data.PatientVO;
+import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.addon.touchkit.ui.TabBarView;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
 public class PatientTab extends NavigationManager {
@@ -33,7 +23,7 @@ public class PatientTab extends NavigationManager {
 	private TextField searchBar = new TextField();
 	private PatientTable patientTable;
 
-	public PatientTab() {
+	public PatientTab(ProviderModel model) {
 		if (instance == null) {
 			instance = this;
 			patientTable = new PatientTable(instance);
@@ -66,7 +56,7 @@ public class PatientTab extends NavigationManager {
 			}
 		});
 		searchBar.setTextChangeEventMode(TextChangeEventMode.LAZY);
-		this.setCaption("Patient Viewer");
+		searchBar.setInputPrompt("Search patients");
 
 	}
 
@@ -84,6 +74,10 @@ public class PatientTab extends NavigationManager {
 
 	public PatientTab getInstance() {
 		return instance;
+	}
+
+	public PatientTable getPatientTable() {
+		return patientTable;
 	}
 
 }

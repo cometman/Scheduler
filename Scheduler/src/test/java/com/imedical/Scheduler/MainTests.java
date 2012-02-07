@@ -2,17 +2,17 @@ package com.imedical.Scheduler;
 
 import static org.junit.Assert.*;
 
+import java.awt.Event;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.imedical.Scheduler.mobilePages.LoginPage;
+import com.vaadin.ui.Button.ClickEvent;
+
 public class MainTests {
 	Logger log = LoggerFactory.getLogger(MainTests.class);
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void appDidstart() {
@@ -24,4 +24,10 @@ public class MainTests {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void another() {
+
+	}
+
 }

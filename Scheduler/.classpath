@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="E:/Users/Clay/git/Scheduler/Scheduler/WebContent/WEB-INF/lib/vaadin-calendar-agpl-3.0-1.2.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BoxDAO"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -21,6 +21,7 @@ public class AppointmentEvent implements CalendarEventEditor,
 	private boolean isAllDay;
 	private List<EventChangeListener> listeners = new ArrayList<EventChangeListener>();
 	private PatientVO patientVO;
+	private String provider_id;
 
 	public Date getStart() {
 		return start;
@@ -100,7 +101,5 @@ public class AppointmentEvent implements CalendarEventEditor,
 	public void setPatientVO(PatientVO patientVO) {
 		this.patientVO = patientVO;
 	}
-
-
 
 }
