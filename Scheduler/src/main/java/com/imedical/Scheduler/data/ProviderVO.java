@@ -6,6 +6,8 @@ public class ProviderVO {
 	private String password;
 	private String firstName;
 	private String email;
+	private String ticket;
+	private String auth_key;
 
 	public String getUsername() {
 		return username;
@@ -45,6 +47,22 @@ public class ProviderVO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public String getAuth_key() {
+		return auth_key;
+	}
+
+	public void setAuth_key(String auth_key) {
+		this.auth_key = auth_key;
 	}
 
 }

@@ -8,6 +8,7 @@ import com.imedical.Scheduler.mobilePages.MainTabSheet;
 import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
 import com.imedical.Scheduler.mobilePages.SettingsTab;
+import com.imedical.box.RegisterNewUser;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
@@ -37,6 +38,7 @@ public class Controller {
 	private Table table;
 	private RegisterWindow registerWindow;
 	private LoginPage loginPage;
+	private RegisterNewUser registerNewUser;
 
 	/*
 	 * Tab Bar View - Add the tabs to the view and setup the views by passing in
@@ -65,7 +67,6 @@ public class Controller {
 		this.m_view = view;
 		registerWindow = (RegisterWindow) m_view;
 		if (view.getClass().getSimpleName().equals(REGISTER_WINDOW)) {
-
 			buildRegisterWindow();
 		}
 
@@ -81,10 +82,16 @@ public class Controller {
 	 */
 	public void buildRegisterWindow() {
 		setLoginWindow();
+
 		loginPage.setVisible(false);
 		if (registerWindow.isVisible() == false) {
 			registerWindow.setVisible(true);
 		}
+
+		mainWindow.setContent(registerWindow);
+		/*
+		 * Cancel listener
+		 */
 		registerWindow.setCancelListener(new ClickListener() {
 
 			private static final long serialVersionUID = -2817522398023135016L;
@@ -96,7 +103,25 @@ public class Controller {
 			}
 		});
 
-		mainWindow.setContent(m_view);
+		/*
+		 * Submit listener
+		 */
+		registerWindow.setRegiserListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// Make sure the passwords match!
+				if (registerWindow.getPasswordChecker().equals(
+						registerWindow.getProviderBeanVO().getBean()
+								.getPassword())) {
+					registerNewUser = new RegisterNewUser(registerWindow
+							.getProviderBeanVO());
+				} else {
+					mainWindow.showNotification("Error",
+							"Passwords do not Match",
+							Window.Notification.TYPE_WARNING_MESSAGE);
+				}
+			}
+		});
 
 	}
 

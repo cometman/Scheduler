@@ -20,4 +20,10 @@ public interface IPatientDAO {
 
 	public PatientVO getPatientByID(int ID);
 
+	public boolean isProviderEmailValid(String email);
+
+	public boolean isProviderUserNameValid(String userName);
+
+	public List<ProviderVO> loadProvidersInList();
+
 }

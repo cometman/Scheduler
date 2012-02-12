@@ -81,7 +81,6 @@ public class PatientDAO implements IPatientDAO {
 				positionInDB = container.nextItemId(positionInDB);
 			}
 		}
-
 		return provider;
 	}
 
@@ -97,4 +96,44 @@ public class PatientDAO implements IPatientDAO {
 		return null;
 	}
 
+	@Override
+	public boolean isProviderEmailValid(String email) {
+
+		return false;
+	}
+
+	@Override
+	public boolean isProviderUserNameValid(String userName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<ProviderVO> loadProvidersInList() {
+		List<ProviderVO> providerList = new ArrayList<ProviderVO>();
+		container = connectionPool.getProviderContainer();
+		Object positionInDB = container.firstItemId();
+		while (positionInDB != null) {
+			ProviderVO providerVO = new ProviderVO();
+			providerVO.setEmail(container.getItem(positionInDB)
+					.getItemProperty("email").toString());
+			providerVO.setUsername(container.getItem(positionInDB)
+					.getItemProperty("username").toString());
+			providerVO.setPassword(container.getItem(positionInDB)
+					.getItemProperty("password").toString());
+			providerVO.setId(container.getItem(positionInDB)
+					.getItemProperty("id").toString());
+			providerVO.setFirstName(container.getItem(positionInDB)
+					.getItemProperty("first_name").toString());
+			providerVO.setAuth_key(container.getItem(positionInDB)
+					.getItemProperty("auth_key").toString());
+			providerVO.setAuth_key(container.getItem(positionInDB)
+					.getItemProperty("ticket").toString());
+
+			providerList.add(providerVO);
+			positionInDB = container.nextItemId(positionInDB);
+
+		}
+		return providerList;
+	}
 }
