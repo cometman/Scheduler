@@ -48,8 +48,13 @@ public class LoginPage extends Window implements ClickListener {
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-		providerModel = new ProviderModel(username.getValue().toString(),
-				password.getValue().toString());
+		try {
+			providerModel = new ProviderModel(username.getValue().toString(),
+					password.getValue().toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (providerModel.getAuthStatus() == true) {
 			this.getApplication().setUser(user);

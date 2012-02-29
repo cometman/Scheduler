@@ -35,7 +35,7 @@ public class DBConnectionPool {
 
 		TableQuery tq = new TableQuery("Providers", jdbcPool);
 
-		tq.setVersionColumn("OPTLOCK");
+		tq.setVersionColumn("id");
 		try {
 			container = new SQLContainer(tq);
 		} catch (SQLException e) {

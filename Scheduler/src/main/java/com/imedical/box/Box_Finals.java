@@ -1,10 +1,10 @@
 package com.imedical.box;
 
-public enum Box_Finals {
-	APIKEY {
-		public String toString() {
-			return "dgnc6ghkqc26lnnbr9lhjzx460qhjsxp";
-		}
+public class Box_Finals {
+	public static final String API_KEY = "dgnc6ghkqc26lnnbr9lhjzx460qhjsxp";
+
+	private Box_Finals() {
+		// never call this
 	}
 
 }

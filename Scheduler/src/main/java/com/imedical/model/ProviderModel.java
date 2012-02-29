@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.imedical.Scheduler.MyVaadinApplication;
-import com.imedical.Scheduler.data.IPatientDAO;
-import com.imedical.Scheduler.data.PatientDAO;
+import com.imedical.Scheduler.data.IProviderPatientDAO;
+import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
@@ -14,13 +14,13 @@ public class ProviderModel {
 	private ProviderVO provider;
 	private List<PatientVO> patients = new ArrayList<PatientVO>();
 	private List<AppointmentEvent> appointments = new ArrayList<AppointmentEvent>();
-	private IPatientDAO ipatientDAO = new PatientDAO();
+	private IProviderPatientDAO ipatientDAO = new ProviderPatientDAO();
 	private boolean authStatus = false;
 
 	private String test = "";
 
 	// Constructor for existing members
-	public ProviderModel(String userID, String password) {
+	public ProviderModel(String userID, String password) throws Exception {
 
 		System.out.println("Trying provider..");
 		provider = ipatientDAO.getProvider(userID, password);

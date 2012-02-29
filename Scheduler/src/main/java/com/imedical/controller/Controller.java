@@ -8,7 +8,7 @@ import com.imedical.Scheduler.mobilePages.MainTabSheet;
 import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
 import com.imedical.Scheduler.mobilePages.SettingsTab;
-import com.imedical.box.RegisterNewUser;
+import com.imedical.box.userregistration.RegisterNewUser;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
@@ -115,6 +115,16 @@ public class Controller {
 								.getPassword())) {
 					registerNewUser = new RegisterNewUser(registerWindow
 							.getProviderBeanVO());
+					registerNewUser.runValidationProcedure();
+
+					/*
+					 * If we made it through the registration process, set the
+					 * user of the application to the newly registered one.
+					 */
+					if (registerNewUser.isRegistrationComplete()) {
+						MyVaadinApplication.get().setUser(
+								registerWindow.getProviderBeanVO());
+					}
 				} else {
 					mainWindow.showNotification("Error",
 							"Passwords do not Match",

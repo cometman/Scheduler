@@ -2,20 +2,10 @@ package com.imedical.Scheduler.data;
 
 public class ProviderVO {
 	private String id;
-	private String username;
 	private String password;
 	private String firstName;
 	private String email;
-	private String ticket;
 	private String auth_key;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public String getPassword() {
 		return password;
@@ -47,14 +37,6 @@ public class ProviderVO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTicket() {
-		return ticket;
-	}
-
-	public void setTicket(String ticket) {
-		this.ticket = ticket;
 	}
 
 	public String getAuth_key() {
