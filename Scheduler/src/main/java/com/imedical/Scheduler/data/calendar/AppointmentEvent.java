@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.imedical.Scheduler.data.PatientVO;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.vaadin.addon.calendar.event.CalendarEventEditor;
 import com.vaadin.addon.calendar.event.CalendarEvent.EventChangeNotifier;
-
+@XStreamAlias("appointment")
 public class AppointmentEvent implements CalendarEventEditor,
 		EventChangeNotifier {
 

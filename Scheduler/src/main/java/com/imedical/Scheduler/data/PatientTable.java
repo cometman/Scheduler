@@ -1,6 +1,7 @@
 package com.imedical.Scheduler.data;
 
 import com.imedical.Scheduler.mobilePages.PatientTab;
+import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -14,12 +15,10 @@ public class PatientTable extends NavigationManager {
 	private PatientContainer patientContainer = new PatientContainer();
 	private NavigationManager navigationManger;
 	private PatientTable patientTable;
-	private PatientTab tabInstance;
 
-	public PatientTable(PatientTab instance) {
+	public PatientTable(ProviderModel model) {
 		if (patientTable == null) {
 			patientTable = this;
-			tabInstance = instance;
 			// Add these columns as temporary - Replace with container
 
 			getTable().addContainerProperty("First Name", String.class, "");
@@ -28,7 +27,7 @@ public class PatientTable extends NavigationManager {
 			table.setSelectable(true);
 			table.setSizeFull();
 			table.setImmediate(true);
-			table.setContainerDataSource(patientContainer.loadInitialData());
+			table.setContainerDataSource(patientContainer.loadInitialData(model));
 			table.setVisibleColumns(PatientContainer.NATUAL_COL_ORDER);
 			table.setColumnHeaders(PatientContainer.COL_HEADERS_ENGLISH);
 		}

@@ -1,5 +1,9 @@
 package com.imedical.Scheduler.data;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,6 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+import com.imedical.box.BoxIOData;
+import com.imedical.box.CreateBoxSession;
+import com.imedical.box.IBoxIOData;
+import com.imedical.box.accountTree.FileVO;
+import com.imedical.box.accountTree.FolderVO;
+import com.imedical.common.LogUtil;
+import com.imedical.model.ProviderModel;
+import com.thoughtworks.xstream.XStream;
 import com.vaadin.addon.sqlcontainer.SQLContainer;
 import com.vaadin.addon.sqlcontainer.filters.Like;
 import com.vaadin.data.Item;
@@ -20,44 +32,28 @@ import com.vaadin.data.util.filter.Compare;
 
 public class ProviderPatientDAO implements IProviderPatientDAO {
 
-	private List<PatientVO> patientList = new ArrayList<PatientVO>();
+	private List<PatientVO> patientList;
 	private DBConnectionPool connectionPool = new DBConnectionPool();
 	private SQLContainer container;
 	private ProviderVO provider;
+	private static final String BOX_FOLDER_PATIENT_SCHEDULER = "PatientScheduler";
+	private static final String BOX_FILE_PATIENT_SCHEDULER = "patients.xml";
 
 	public List<PatientVO> getPatientByString(String searchQuery) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<PatientVO> getAllPatients() {
-		// Test Patients
-		AppointmentEvent testAppointment = new AppointmentEvent();
-
-		GregorianCalendar gCal = new GregorianCalendar();
-		PatientVO patient1 = new PatientVO();
-		patient1.setFirstName("Clay");
-		patient1.setLastName("Selby");
-		patient1.setAge(22);
-		patient1.setPhoneNumber("3256687007");
-		patient1.setAge(22);
-
-		testAppointment.setPatientVO(patient1);
-		gCal.set(Calendar.HOUR_OF_DAY, 12);
-		gCal.add(Calendar.DAY_OF_WEEK, 1);
-		testAppointment.setStart(gCal.getTime());
-		gCal.add(Calendar.HOUR, 1);
-		testAppointment.setEnd(gCal.getTime());
-		testAppointment.setCaption("New Test apointment");
-		testAppointment.setDescription("THe new description for the test");
-		patient1.addAppointment(testAppointment);
-
-		patientList.add(patient1);
+	public List<PatientVO> getAllPatients(ProviderVO provider) {
+		if (patientList == null) {
+			patientList = this.createPatientsAndAppointmentFromXML(provider)
+					.getPatients();
+		}
 
 		return patientList;
 	}
 
-	public void addNewPatient(PatientVO patient) {
+	public void addNewPatient(ProviderModel providerModel) {
 		// TODO Auto-generated method stub
 	}
 
@@ -180,8 +176,8 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 					.getItemProperty("first_name").toString());
 			providerVO.setAuth_key(container.getItem(positionInDB)
 					.getItemProperty("auth_key").toString());
-//			providerVO.setAuth_key(container.getItem(positionInDB)
-//					.getItemProperty("ticket").toString());
+			// providerVO.setAuth_key(container.getItem(positionInDB)
+			// .getItemProperty("ticket").toString());
 
 			providerList.add(providerVO);
 			positionInDB = container.nextItemId(positionInDB);
@@ -236,6 +232,82 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	@Override
+	public PatientVOList createPatientsAndAppointmentFromXML(ProviderVO provider) {
+		if (provider != null) {
+			PatientVOList patients;
+			IBoxIOData boxio = new BoxIOData();
+			FolderVO providerAccount = boxio.createAccoutTreePOJO(boxio
+					.getAccountTreeXML(0, provider));
+			for (FolderVO f : providerAccount.getFolders()) {
+				/*
+				 * First find the patient scheduler folder
+				 */
+				if (f.getName().equals(BOX_FOLDER_PATIENT_SCHEDULER)) {
+					/*
+					 * Next, locate the patient scheduler file
+					 */
+					for (FileVO file : f.getFiles()) {
+						/*
+						 * Once we have the file, download it and pass to the
+						 * getPatientsFromXML method
+						 */
+						if (file.getFileName().equals(
+								BOX_FILE_PATIENT_SCHEDULER)) {
+							File downloadedXML = boxio.retrieveFile(
+									file.getId(), provider);
+							String stringFromFile = this
+									.getStringContentsFromFile(downloadedXML);
+							patients = getPatientsFromXML(stringFromFile);
+							return patients;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private String getStringContentsFromFile(File f) {
+		String parsedString = null;
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(f);
+			int length = (int) f.length();
+			byte[] buffer = new byte[length];
+			fis.read(buffer, 0, length);
+			parsedString = new String(buffer);
+		} catch (FileNotFoundException e) {
+			LogUtil.writeMessage("Problem creating input stream for file ["
+					+ f.getName() + "]");
+			e.printStackTrace();
+		} catch (IOException e) {
+			LogUtil.writeMessage("Problem writing to buffer from file ["
+					+ f.getName() + "]");
+			e.printStackTrace();
+		}
+
+		return parsedString;
+	}
+
+	/*
+	 * Extract the patients from xml via XStream.
+	 */
+	private PatientVOList getPatientsFromXML(String xmlFile) {
+		XStream xstream = new XStream();
+		xstream.autodetectAnnotations(true);
+		xstream.alias("patient", PatientVO.class);
+		xstream.alias("patients", PatientVOList.class);
+		xstream.autodetectAnnotations(true);
+
+		PatientVOList patients = new PatientVOList();
+
+		patients = (PatientVOList) xstream.fromXML(xmlFile);
+
+		return patients;
 
 	}
 }

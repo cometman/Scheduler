@@ -100,7 +100,8 @@ public class MyVaadinApplication extends TouchKitApplication {
 	public PatientContainer getPatientContainer() {
 		if (dataSource == null) {
 			dataSource = new PatientContainer();
-			dataSource = dataSource.loadInitialData();
+			ProviderModel model = (ProviderModel) getUser();
+			dataSource = dataSource.loadInitialData(model);
 		}
 		return dataSource;
 	}

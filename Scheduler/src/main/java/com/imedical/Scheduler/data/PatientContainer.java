@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.eclipse.jetty.continuation.ContinuationFilter.FilteredContinuation;
 
+import com.imedical.Scheduler.MyVaadinApplication;
+import com.imedical.model.ProviderModel;
 import com.vaadin.data.util.BeanItemContainer;
 
 public class PatientContainer extends BeanItemContainer<PatientVO> implements
@@ -21,16 +23,17 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 	public static final Object[] NATUAL_COL_ORDER = new Object[] { "firstName",
 			"lastName", "phoneNumber" };
 	public static final String[] COL_HEADERS_ENGLISH = new String[] {
-			"First name", "Last name", "Phone"};
+			"First name", "Last name", "Phone" };
 
 	public PatientContainer() throws IllegalArgumentException {
 		super(PatientVO.class);
 	}
 
-	public PatientContainer loadInitialData() {
+	public PatientContainer loadInitialData(ProviderModel model) {
 		if (patientDAO == null) {
 			patientDAO = new ProviderPatientDAO();
-			patients = patientDAO.getAllPatients();
+			patients = patientDAO
+					.getAllPatients(model.getProvider());
 		}
 
 		if (patientContainer == null) {

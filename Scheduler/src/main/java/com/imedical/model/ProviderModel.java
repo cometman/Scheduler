@@ -9,6 +9,7 @@ import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+import com.imedical.common.LogUtil;
 
 public class ProviderModel {
 	private ProviderVO provider;
@@ -25,11 +26,9 @@ public class ProviderModel {
 		System.out.println("Trying provider..");
 		provider = ipatientDAO.getProvider(userID, password);
 
-		System.out.println("Invalid provider..");
-
 		if (provider != null) {
 			authStatus = true;
-			System.out.println("Great!");
+//			LogUtil.writeMessage(Pr)
 			// this.patients = setPatientsForModel(provider.getId());
 			// this.appointments = setAppointmentsForModel(provider.getId());
 

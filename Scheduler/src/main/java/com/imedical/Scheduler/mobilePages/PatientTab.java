@@ -26,7 +26,7 @@ public class PatientTab extends NavigationManager {
 	public PatientTab(ProviderModel model) {
 		if (instance == null) {
 			instance = this;
-			patientTable = new PatientTable(instance);
+			patientTable = new PatientTable(model);
 		}
 		buildView();
 
