@@ -18,4 +18,8 @@ public class PatientVOList {
 	public List<PatientVO> getPatients() {
 		return patients;
 	}
+
+	public void removePatient(PatientVO f) {
+		patients.remove(f);
+	}
 }

@@ -38,7 +38,6 @@ public class ProviderModel {
 	private ProviderModel providerModel = this;
 	private IBoxIOData boxIOData = new BoxIOData();
 
-	// Constructor for existing members
 	public ProviderModel(String userID, String password) throws Exception {
 
 		System.out.println("Trying provider..");
@@ -53,6 +52,15 @@ public class ProviderModel {
 			// this.appointments = setAppointmentsForModel(provider.getId());
 
 		}
+
+	}
+
+	public ProviderModel(ProviderVO provider) {
+		if (provider != null) {
+			authStatus = true;
+			setProviderDataFileID();
+		}
+
 	}
 
 	// Constructor for new members

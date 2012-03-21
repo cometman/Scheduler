@@ -2,6 +2,7 @@ package com.imedical.controller;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.PatientVO;
+import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.Scheduler.mobilePages.CalendarTab;
 import com.imedical.Scheduler.mobilePages.LoginPage;
 import com.imedical.Scheduler.mobilePages.MainTabSheet;
@@ -116,15 +117,27 @@ public class Controller {
 								.getPassword())) {
 					registerNewUser = new RegisterNewUser(registerWindow
 							.getProviderBeanVO());
-					registerNewUser.runValidationProcedure();
 
 					/*
 					 * If we made it through the registration process, set the
 					 * user of the application to the newly registered one.
 					 */
 					if (registerNewUser.isRegistrationComplete()) {
-						MyVaadinApplication.get().setUser(
-								registerWindow.getProviderBeanVO());
+						ProviderVO providerForModel = registerWindow
+								.getProviderBeanVO().getBean();
+						try {
+							// ProviderModel providerModel = new ProviderModel(
+							// providerForModel.getId(), providerForModel
+							// .getPassword());
+							ProviderModel providerModel = new ProviderModel(
+									registerNewUser.getRegisteredUser());
+							MyVaadinApplication.get().setUser(providerModel);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						// MyVaadinApplication.get().setUser(
+						// registerWindow.getProviderBeanVO());
 					}
 				} else {
 					mainWindow.showNotification("Error",
@@ -169,9 +182,7 @@ public class Controller {
 		public void buttonClick(ClickEvent event) {
 			System.out.println("click");
 
-		
 			patientTab.addNewPatient();
-			
 
 		}
 

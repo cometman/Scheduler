@@ -32,12 +32,25 @@ public interface IProviderPatientDAO {
 
 	/**
 	 * Add a new patient to the provider.
+	 * 
 	 * @param providerModel
-	 * Contains the provider, patients, appointments, etc of the provider.
-	 * @param patient 
-	 * The patient to add to the provider.
+	 *            Contains the provider, patients, appointments, etc of the
+	 *            provider.
+	 * @param patient
+	 *            The patient to add to the provider.
 	 */
 	public void addNewPatient(ProviderModel providerModel, PatientVO patient);
+
+	/**
+	 * Remove a patient from the provider.
+	 * 
+	 * @param providerModel
+	 *            Contains the provider, patients, appointments, etc of the
+	 *            provider.
+	 * @param patient
+	 *            The patient to remove from the provider.
+	 */
+	public void removePatient(ProviderModel providerModel, PatientVO patient);
 
 	public PatientVO getPatientByID(int ID);
 

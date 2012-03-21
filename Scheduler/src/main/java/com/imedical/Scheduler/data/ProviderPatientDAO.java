@@ -52,7 +52,7 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			patientList = this.createPatientsAndAppointmentFromXML(provider)
 					.getPatients();
 		}
-
+		
 		return patientList;
 	}
 
@@ -62,8 +62,24 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 				.createPatientsAndAppointmentFromXML(providerModel);
 		patientList.addPatient(patient);
 
-		// Convert to XML
+		pushToBox(providerModel, patientList);
+	}
 
+	@Override
+	public void removePatient(ProviderModel providerModel, PatientVO patient) {
+		PatientVOList patientList = this
+				.createPatientsAndAppointmentFromXML(providerModel);
+		patientList.removePatient(patient);
+		pushToBox(providerModel, patientList);
+
+	}
+
+	/**
+	 * This is the logic used to convert objects into XML and push the file to
+	 * BOX.net
+	 */
+	private void pushToBox(ProviderModel providerModel,
+			PatientVOList patientList) {
 		XStream xstream = XStreamHelper.getXStream();
 		String xml = xstream.toXML(patientList);
 		File uploadFile = new File(Box_Finals.BOX_FILE_PATIENT_SCHEDULER);
@@ -77,7 +93,6 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		// Commit the changes to BOX.net
 		boxio.uploadDataFile(uploadFile, providerModel.getProvider(),
 				providerModel.getProviderDataFolderID());
-
 	}
 
 	@Override
@@ -118,7 +133,7 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -341,4 +356,5 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		return patients;
 
 	}
+
 }

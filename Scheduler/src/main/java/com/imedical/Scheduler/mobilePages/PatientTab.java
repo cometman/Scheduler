@@ -75,12 +75,14 @@ public class PatientTab extends NavigationManager {
 	}
 
 	public void showDetailView(PatientVO patient) {
-		patientDetailView = new PatientDetailView(patient);
+		patientDetailView = new PatientDetailView(patient,
+				patientTable.getTable());
 		navigateTo(patientDetailView);
 	}
 
 	public void addNewPatient() {
-		NewPatientPage newPatientPage = new NewPatientPage(patientTable.getTable(), model);
+		NewPatientPage newPatientPage = new NewPatientPage(
+				patientTable.getTable(), model);
 		// patientDetailView = new PatientDetailView();
 		navigateTo(newPatientPage);
 	}

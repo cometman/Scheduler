@@ -31,22 +31,24 @@ public class RegisterUserBox {
 	private boolean registerAttempt = false;
 	private String errorMessage = "";
 	private SOAPFolderHolder createdFolder;
+	private IProviderPatientDAO dao = new ProviderPatientDAO();
+	private ProviderVO provider;
 
 	public RegisterUserBox() {
 
 	}
 
-	public RegisterUserBox(String login, String password)
-			throws RemoteException {
-
+	public RegisterUserBox(ProviderVO provider) throws RemoteException {
+		this.provider = provider;
 		CreateBoxSession.initializeServiceLocator();
 		CreateBoxSession.proxy.register_new_user(CreateBoxSession.APIKEY,
-				login, password, status, auth_token, user);
+				provider.getEmail(), provider.getPassword(), status,
+				auth_token, user);
 		if (status.value.equals(SUCCESS_RESPONSE)) {
 			registerAttempt = true;
-			ProviderVO newProvider = constructProvider(login, password);
-			setupFolderStructure(newProvider);
-			createTemplateFile(newProvider);
+			// ProviderVO newProvider = constructProvider(login, password);
+			setupFolderStructure(provider);
+			createTemplateFile(provider);
 
 		} else if (status.value.equals(BAD_EMAIL_INVALID_RESPONSE)) {
 			errorMessage = "The login provided is not a valid email address.";
@@ -83,7 +85,8 @@ public class RegisterUserBox {
 	 */
 	public ProviderVO constructProvider(String userid, String password) {
 		IProviderPatientDAO dao = new ProviderPatientDAO();
-		ProviderVO newProvider = null;
+		ProviderVO newProvider = new ProviderVO();
+
 		try {
 			newProvider = dao.getProvider(userid, password);
 		} catch (Exception e) {
@@ -105,7 +108,7 @@ public class RegisterUserBox {
 		boolean createFolderResult = false;
 		try {
 			CreateBoxSession.proxy.create_folder(Box_Finals.API_KEY,
-					provider.getAuth_key(), id,
+					auth_token.value, id,
 					Box_Finals.BOX_FOLDER_PATIENT_SCHEDULER, shared, status,
 					createdFolder);
 

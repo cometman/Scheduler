@@ -45,7 +45,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	@Override
 	public void setUser(Object user) {
 		super.setUser(user);
-
+//		providerModel = (ProviderModel) user;
 		if (user != null && !user.toString().equals("new")) {
 			providerModel = login.getProviderModel();
 			controller = new Controller(mainTabSheet, providerModel);
@@ -61,6 +61,25 @@ public class MyVaadinApplication extends TouchKitApplication {
 			}
 
 		}
+//		
+//		
+//		super.setUser(user);
+//		
+//		if (user != null && !user.toString().equals("new")) {
+//			providerModel = login.getProviderModel();
+//			controller = new Controller(mainTabSheet, providerModel);
+//		}
+//
+//		if (user.equals("new")) {
+//			if (providerModel == null) {
+//				providerModel = new ProviderModel();
+//				registerWindow = new RegisterWindow(providerModel.getProvider());
+//				controller = new Controller(registerWindow, providerModel);
+//			} else {
+//				controller.buildRegisterWindow();
+//			}
+//
+//		}
 	};
 
 	public void showLoginWindow() {

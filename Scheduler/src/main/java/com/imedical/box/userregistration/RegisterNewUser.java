@@ -51,10 +51,9 @@ public class RegisterNewUser {
 
 	public void registerUserWithBox() {
 		try {
-			registerUserWithBox = new RegisterUserBox(provider.getEmail(),
-					provider.getPassword());
+			registerUserWithBox = new RegisterUserBox(provider);
 			if (registerUserWithBox.getAttempt()) {
-				registrationComplete = true;
+
 				/*
 				 * Set the authentication token once registered with box
 				 */
@@ -67,6 +66,10 @@ public class RegisterNewUser {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} finally {
+					// registerUserWithBox.setupFolderStructure(provider);
+					// registerUserWithBox.createTemplateFile(provider);
+					 registrationComplete = true;
 				}
 			} else {
 				displayErrorMessage(registerUserWithBox.getErrorMessage());
@@ -138,6 +141,10 @@ public class RegisterNewUser {
 		}
 
 		return false;
+	}
+	
+	public ProviderVO getRegisteredUser(){
+		return provider;
 	}
 
 	/*
