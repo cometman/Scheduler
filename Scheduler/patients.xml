@@ -11,4 +11,33 @@
     <email>john@doe.com</email>
     <appointments/>
   </patient>
+  <patient>
+    <uniqueId>0</uniqueId>
+    <age>0</age>
+    <appointments/>
+  </patient>
+  <patient>
+    <uniqueId>22</uniqueId>
+    <firstName>23</firstName>
+    <lastName>asdfasdf</lastName>
+    <middleName>asdf</middleName>
+    <age>123</age>
+    <phoneNumber>23</phoneNumber>
+    <referral>asdf</referral>
+    <paymentType>asdf</paymentType>
+    <email>123</email>
+    <appointments/>
+  </patient>
+  <patient>
+    <uniqueId>22</uniqueId>
+    <firstName>asdf</firstName>
+    <lastName>asdf</lastName>
+    <middleName>asdf</middleName>
+    <age>123</age>
+    <phoneNumber>123</phoneNumber>
+    <referral>nullasdf</referral>
+    <paymentType>asdf</paymentType>
+    <email>123</email>
+    <appointments/>
+  </patient>
 </patients>

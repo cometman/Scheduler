@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+
+import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.box.BoxIOData;
 import com.imedical.box.Box_Finals;
@@ -52,7 +54,7 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			patientList = this.createPatientsAndAppointmentFromXML(provider)
 					.getPatients();
 		}
-		
+
 		return patientList;
 	}
 
@@ -82,7 +84,8 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			PatientVOList patientList) {
 		XStream xstream = XStreamHelper.getXStream();
 		String xml = xstream.toXML(patientList);
-		File uploadFile = new File(Box_Finals.BOX_FILE_PATIENT_SCHEDULER);
+		System.out.println(xml);
+		File uploadFile = new File(providerModel.getProvider().getId() + ".xml");
 		try {
 			FileUtils.writeStringToFile(uploadFile, xml);
 		} catch (IOException e) {
@@ -91,8 +94,13 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		}
 
 		// Commit the changes to BOX.net
-		boxio.uploadDataFile(uploadFile, providerModel.getProvider(),
-				providerModel.getProviderDataFolderID());
+		try {
+			boxio.uploadDataFile(uploadFile, providerModel.getProvider(),
+					providerModel.getProviderDataFolderID());
+			uploadFile.delete();
+		} finally {
+			boxio.renameUploadedPatientsBoxFile(providerModel);
+		}
 	}
 
 	@Override
@@ -133,7 +141,7 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 

@@ -53,13 +53,10 @@ public class RegisterNewUser {
 		try {
 			registerUserWithBox = new RegisterUserBox(provider);
 			if (registerUserWithBox.getAttempt()) {
-
-				/*
-				 * Set the authentication token once registered with box
-				 */
-				provider.setAuth_key(registerUserWithBox.getAuthToken());
 				try {
+					provider.setAuth_key(registerUserWithBox.getAuthToken());
 					patientDAO.addProvider(provider);
+
 				} catch (UnsupportedOperationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -67,13 +64,22 @@ public class RegisterNewUser {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} finally {
-					// registerUserWithBox.setupFolderStructure(provider);
-					// registerUserWithBox.createTemplateFile(provider);
-					 registrationComplete = true;
+					/*
+					 * Create the users folders and files
+					 */
+					CreateBoxFolderAndFile createBoxAndFiles = new CreateBoxFolderAndFile(
+							provider);
+					if (createBoxAndFiles.createBaseApplicationFolder()) {
+						if (createBoxAndFiles.createTemplateFile()) {
+							registrationComplete = true;
+						}
+					}
 				}
+
 			} else {
 				displayErrorMessage(registerUserWithBox.getErrorMessage());
 			}
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,8 +148,8 @@ public class RegisterNewUser {
 
 		return false;
 	}
-	
-	public ProviderVO getRegisteredUser(){
+
+	public ProviderVO getRegisteredUser() {
 		return provider;
 	}
 

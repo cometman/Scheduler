@@ -46,18 +46,20 @@ public class PatientDetailView extends NavigationView implements ClickListener {
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-		this.getNavigationManager().navigateBack();
+//		this.getNavigationManager().navigateBack();
 		PatientVO comparePatient;
 		System.out.println(patient.getFirstName());
 		for (Object item : table.getItemIds()) {
-			comparePatient = (PatientVO) item;
-			if (comparePatient.getUniqueId() == patient.getUniqueId()) {
-				System.out.println(comparePatient.getFirstName());
-
-				table.removeItem(item);
-				// IProviderPatientDAO pdao = new ProviderPatientDAO();
-				// pdao.removePatient(model, patient);
-			}
+			table.removeItem(item);
+//			comparePatient = (PatientVO) item;
+//			if (comparePatient.getUniqueId() == patient.getUniqueId()) {
+//				System.out.println(comparePatient.getFirstName());
+//				System.out.println("ID: "+ item.toString());
+//				table.removeItem(item);
+//				MyVaadinApplication.get().getMainWindow().showNotification("Removing patient");
+//				// IProviderPatientDAO pdao = new ProviderPatientDAO();
+//				// pdao.removePatient(model, patient);
+//			}
 		}
 
 	}

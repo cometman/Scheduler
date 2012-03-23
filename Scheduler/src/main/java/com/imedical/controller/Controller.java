@@ -126,15 +126,18 @@ public class Controller {
 						ProviderVO providerForModel = registerWindow
 								.getProviderBeanVO().getBean();
 						try {
+						
 							// ProviderModel providerModel = new ProviderModel(
 							// providerForModel.getId(), providerForModel
 							// .getPassword());
-							ProviderModel providerModel = new ProviderModel(
-									registerNewUser.getRegisteredUser());
-							MyVaadinApplication.get().setUser(providerModel);
+
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						} finally {
+							ProviderModel providerModel = new ProviderModel(
+									providerForModel);
+							MyVaadinApplication.get().setUser(providerModel);
 						}
 						// MyVaadinApplication.get().setUser(
 						// registerWindow.getProviderBeanVO());

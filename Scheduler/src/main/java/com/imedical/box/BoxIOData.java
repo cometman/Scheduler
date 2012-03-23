@@ -39,6 +39,7 @@ import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.box.accountTree.FolderVO;
 import com.imedical.box.accountTree.XStreamHelper;
 import com.imedical.common.LogUtil;
+import com.imedical.model.ProviderModel;
 
 public class BoxIOData implements IBoxIOData {
 
@@ -128,6 +129,28 @@ public class BoxIOData implements IBoxIOData {
 		System.out.println(response);
 
 		return response.toString();
+	}
+
+	public void renameUploadedPatientsBoxFile(ProviderModel model) {
+		String result;
+		try {
+			model.setProviderDataFileID(model.getProvider());
+			CreateBoxSession.proxy.delete(Box_Finals.API_KEY, model
+					.getProvider().getAuth_key(), "file", Long.parseLong(model
+					.getProviderDataFileID()));
+
+			result = CreateBoxSession.proxy.rename(Box_Finals.API_KEY, model
+					.getProvider().getAuth_key(), "file", Long.parseLong(model
+					.getUploadedFileID()), "patients.xml");
+
+			System.out.println(result);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public URLConnection createRemoteConnection(URL url) {

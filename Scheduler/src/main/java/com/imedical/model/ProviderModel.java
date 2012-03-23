@@ -17,6 +17,8 @@ import com.imedical.box.Box_Finals;
 import com.imedical.box.IBoxIOData;
 import com.imedical.box.accountTree.FileVO;
 import com.imedical.box.accountTree.FolderVO;
+import com.imedical.box.userregistration.RegisterNewUser;
+import com.imedical.box.userregistration.RegisterUserBox;
 import com.imedical.common.LogUtil;
 import com.vaadin.data.Item.PropertySetChangeEvent;
 import com.vaadin.data.Item.PropertySetChangeListener;
@@ -35,30 +37,32 @@ public class ProviderModel {
 	private boolean authStatus = false;
 	private String schedulerFileID;
 	private String schedulerFodlerID;
+	private String uploadedFileID;
 	private ProviderModel providerModel = this;
 	private IBoxIOData boxIOData = new BoxIOData();
 
 	public ProviderModel(String userID, String password) throws Exception {
 
-		System.out.println("Trying provider..");
 		provider = ipatientDAO.getProvider(userID, password);
 
-		if (provider != null) {
+		if (this.getProvider() != null) {
 			authStatus = true;
-			setProviderDataFileID();
-			// Set the local data source equal to the file from Box.net
-			// LogUtil.writeMessage(Pr)
-			// this.patients = setPatientsForModel(provider.getId());
-			// this.appointments = setAppointmentsForModel(provider.getId());
-
+			setProviderDataFileID(provider);
 		}
+		// setProviderDataFileID(provider);
+		// // Set the local data source equal to the file from Box.net
+		// // LogUtil.writeMessage(Pr)
+		// // this.patients = setPatientsForModel(provider.getId());
+		// // this.appointments = setAppointmentsForModel(provider.getId());
+		//
+		// }
 
 	}
 
 	public ProviderModel(ProviderVO provider) {
 		if (provider != null) {
 			authStatus = true;
-			setProviderDataFileID();
+			setProviderDataFileID(provider);
 		}
 
 	}
@@ -69,6 +73,7 @@ public class ProviderModel {
 	}
 
 	public ProviderVO getProvider() {
+
 		return provider;
 	}
 
@@ -97,7 +102,7 @@ public class ProviderModel {
 		return authStatus;
 	}
 
-	private void setProviderDataFileID() {
+	public void setProviderDataFileID(ProviderVO provider) {
 		FolderVO providerAccount = boxIOData.createAccoutTreePOJO(boxIOData
 				.getAccountTreeXML(0, provider));
 
@@ -105,11 +110,26 @@ public class ProviderModel {
 			/*
 			 * First find the patient scheduler folder
 			 */
+
 			if (f.getName().equals(Box_Finals.BOX_FOLDER_PATIENT_SCHEDULER)) {
 				/*
 				 * Next, locate the patient scheduler file
 				 */
 				schedulerFodlerID = f.getId();
+
+				/*
+				 * If we cannot find any files, create a file in the box account
+				 * for patient scheduler
+				 */
+
+				// if (f.getFiles() == null) {
+				//
+				// RegisterUserBox rgb = new RegisterUserBox();
+				// rgb.createTemplateFile(this.getProvider());
+				//
+				// }
+				//
+				// else {
 				for (FileVO file : f.getFiles()) {
 					/*
 					 * Once we have the file, download it and pass to the
@@ -119,9 +139,21 @@ public class ProviderModel {
 							Box_Finals.BOX_FILE_PATIENT_SCHEDULER)) {
 						schedulerFileID = file.getId();
 					}
+					/*
+					 * This file is for editing patients.xml. It is a uplaoded
+					 * file.
+					 */
+					if (file.getFileName().equals(provider.getId() + ".xml")) {
+						uploadedFileID = file.getId();
+					}
 				}
+				// }
 			}
 		}
+	}
+
+	public String getUploadedFileID() {
+		return uploadedFileID;
 	}
 
 	public String getProviderDataFileID() {

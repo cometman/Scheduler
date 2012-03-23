@@ -33,7 +33,6 @@ public class LoginPage extends Window implements ClickListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				MyVaadinApplication.get().setUser("new");
-
 			}
 		});
 

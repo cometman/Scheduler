@@ -5,6 +5,7 @@ import java.io.File;
 import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.box.accountTree.BoxAccountTree;
 import com.imedical.box.accountTree.FolderVO;
+import com.imedical.model.ProviderModel;
 
 public interface IBoxIOData {
 
@@ -71,5 +72,11 @@ public interface IBoxIOData {
 	 * @return Id of the file in the specified folder
 	 */
 	public String getFileIDByFolderName(FolderVO acctFolder, String folderName);
+	
+	/**
+	 * Used to rename the patients.xml file to the appropriate name
+	 * @param model
+	 */
+	public void renameUploadedPatientsBoxFile(ProviderModel model);
 
 }
