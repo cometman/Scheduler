@@ -84,8 +84,13 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 			PatientVOList patientList) {
 		XStream xstream = XStreamHelper.getXStream();
 		String xml = xstream.toXML(patientList);
+		System.out.println("here");
 		System.out.println(xml);
-		File uploadFile = new File(providerModel.getProvider().getId() + ".xml");
+		// File uploadFile = new File(providerModel.getProvider().getId() +
+		// ".xml");
+		File uploadFile = new File("patients.xml");
+		// Check file size. If greater than 0k, delete contents.
+		// uploadFile.delete()
 		try {
 			FileUtils.writeStringToFile(uploadFile, xml);
 		} catch (IOException e) {
@@ -97,9 +102,9 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		try {
 			boxio.uploadDataFile(uploadFile, providerModel.getProvider(),
 					providerModel.getProviderDataFolderID());
-			uploadFile.delete();
 		} finally {
-			boxio.renameUploadedPatientsBoxFile(providerModel);
+			uploadFile.delete();
+			// boxio.renameUploadedPatientsBoxFile(providerModel);
 		}
 	}
 
@@ -306,6 +311,8 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 								Box_Finals.BOX_FILE_PATIENT_SCHEDULER)) {
 							File downloadedXML = boxio.retrieveFile(
 									file.getId(), providerModel.getProvider());
+
+							
 							String stringFromFile = this
 									.getStringContentsFromFile(downloadedXML);
 							if (stringFromFile.length() > 0) {
@@ -313,6 +320,9 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 							} else {
 								patients = new PatientVOList();
 							}
+							// Delete the downloaded file now that we are
+							// finished with it
+							downloadedXML.delete();
 							return patients;
 						}
 					}

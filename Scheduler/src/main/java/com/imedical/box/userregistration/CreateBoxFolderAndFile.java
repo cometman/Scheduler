@@ -73,6 +73,8 @@ public class CreateBoxFolderAndFile {
 			LogUtil.writeMessage("Unable to create XML file for the new user!"
 					+ e.getMessage());
 			e.printStackTrace();
+		} finally {
+			xmlTemplate.delete();
 		}
 		return createFileResult;
 	}
