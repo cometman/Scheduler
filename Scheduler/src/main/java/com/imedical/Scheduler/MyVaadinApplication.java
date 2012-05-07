@@ -12,6 +12,7 @@ import com.vaadin.addon.touchkit.ui.NavigationBar;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.addon.touchkit.ui.TouchKitWindow;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
@@ -35,6 +36,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 	LoginPage login;
 
 	public MyVaadinApplication() {
+//		setTheme("imedical");
 		if (instance == null) {
 			login = new LoginPage();
 			instance = this;

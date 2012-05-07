@@ -26,7 +26,7 @@ public class MainCalendar extends Calendar {
 
 		eventProvider = new CalEventProvider();
 
-		this.setEventProvider(eventProvider);
+//		this.setEventProvider(eventProvider);
 	}
 
 	public Calendar createCalendar() {

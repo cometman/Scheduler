@@ -1,5 +1,6 @@
 package com.imedical.Scheduler.mobilePages;
 
+import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.IProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientDetailPanel;
 import com.imedical.Scheduler.data.PatientForm;
@@ -35,7 +36,7 @@ public class NewPatientPage extends NavigationView implements ClickListener {
 
 	public void buildContentPanel() {
 		this.setCaption("New Patient");
-		this.getLeftComponent().setCaption("Cancel");
+		this.getLeftComponent().setCaption("Back");
 		contentPanel.addComponent(addPatientButton);
 		PatientForm form = new PatientForm(patient);
 		form.setImmediate(true);
@@ -46,7 +47,8 @@ public class NewPatientPage extends NavigationView implements ClickListener {
 	public void buttonClick(ClickEvent event) {
 		table.addItem(patient);
 		daoModel.addNewPatient(model, patient);
-		this.getNavigationManager().navigateBack();
+//		this.getNavigationManager().navigateBack();
 		System.out.println("added");
+		MyVaadinApplication.get().getMainWindow().showNotification("Succcess!", "New patient record created.");
 	}
 }

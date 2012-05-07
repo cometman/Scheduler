@@ -8,9 +8,10 @@ import com.imedical.Scheduler.data.PatientVO;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.vaadin.addon.calendar.event.CalendarEventEditor;
 import com.vaadin.addon.calendar.event.CalendarEvent.EventChangeNotifier;
+
 @XStreamAlias("appointment")
-public class AppointmentEvent implements CalendarEventEditor,
-		EventChangeNotifier {
+public class AppointmentEvent {// implements CalendarEventEditor,
+								// EventChangeNotifier {
 
 	private static final long serialVersionUID = -7057468551667781922L;
 
@@ -20,7 +21,8 @@ public class AppointmentEvent implements CalendarEventEditor,
 	private String appointmentReason;
 	private String styleName;
 	private boolean isAllDay;
-	private List<EventChangeListener> listeners = new ArrayList<EventChangeListener>();
+	// private List<EventChangeListener> listeners = new
+	// ArrayList<EventChangeListener>();
 	private PatientVO patientVO;
 	private String provider_id;
 
@@ -50,50 +52,50 @@ public class AppointmentEvent implements CalendarEventEditor,
 
 	public void setCaption(String caption) {
 		this.caption = caption;
-		fireEventChange();
+		// fireEventChange();
 
 	}
 
 	public void setDescription(String description) {
 		this.appointmentReason = description;
-		fireEventChange();
+		// fireEventChange();
 	}
 
 	public void setEnd(Date end) {
 		this.end = end;
-		fireEventChange();
+		// fireEventChange();
 	}
 
 	public void setStart(Date start) {
 		this.start = start;
-		fireEventChange();
+		// fireEventChange();
 	}
 
-	public void setStyleName(String styleName) {
-		this.styleName = styleName;
-		fireEventChange();
-	}
-
+	// public void setStyleName(String styleName) {
+	// this.styleName = styleName;
+	// fireEventChange();
+	// }
+	//
 	public void setAllDay(boolean isAllDay) {
 		this.isAllDay = isAllDay;
-		fireEventChange();
+		// fireEventChange();
 	}
 
-	public void addListener(EventChangeListener listener) {
-		listeners.add(listener);
-	}
-
-	public void removeListener(EventChangeListener listener) {
-		listeners.remove(listener);
-	}
-
-	protected void fireEventChange() {
-		EventChange event = new EventChange(this);
-
-		for (EventChangeListener listener : listeners) {
-			listener.eventChange(event);
-		}
-	}
+	// public void addListener(EventChangeListener listener) {
+	// listeners.add(listener);
+	// }
+	//
+	// public void removeListener(EventChangeListener listener) {
+	// listeners.remove(listener);
+	// }
+	//
+	// protected void fireEventChange() {
+	// EventChange event = new EventChange(this);
+	//
+	// for (EventChangeListener listener : listeners) {
+	// listener.eventChange(event);
+	// }
+	// }
 
 	public PatientVO getPatientVO() {
 		return patientVO;

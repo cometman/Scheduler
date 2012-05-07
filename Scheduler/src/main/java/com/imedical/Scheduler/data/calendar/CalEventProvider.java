@@ -15,7 +15,7 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.ui.Component.Event;
 
-public class CalEventProvider implements CalendarEventProvider {
+public class CalEventProvider {// implements CalendarEventProvider {
 
 	private static final long serialVersionUID = 1550248810556339270L;
 
@@ -26,38 +26,39 @@ public class CalEventProvider implements CalendarEventProvider {
 
 	public CalEventProvider() {
 
-		patientContainer = appReference.getApplicationInstance()
-				.getPatientContainer();
-
-		for (int i = 0; i < patientContainer.size(); i++) {
-			PatientVO patientItem = patientContainer.getIdByIndex(i);
-
-			if (patientItem.getAppointments() != null) {
-				for (AppointmentEvent e : patientItem.getAppointments()) {
-					eventList.add(e);
-					appointmentEvent.add(e);
-				}
-			}
-		}
-	}
-
-	@Override
-	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
-		return eventList;
-	}
-
-	public AppointmentEvent getAppointmentByStartAndCaption(CalendarEvent event) {
-		AppointmentEvent eventReturn = null;
-
-		for (AppointmentEvent e : appointmentEvent) {
-			if (e.getStart() == event.getStart()) {
-				if (e.getEnd() == event.getEnd()) {
-					eventReturn = e;
-				}
-			}
-
-		}
-		return eventReturn;
+		// patientContainer = appReference.getApplicationInstance()
+		// .getPatientContainer();
+		//
+		// for (int i = 0; i < patientContainer.size(); i++) {
+		// PatientVO patientItem = patientContainer.getIdByIndex(i);
+		//
+		// if (patientItem.getAppointments() != null) {
+		// for (AppointmentEvent e : patientItem.getAppointments()) {
+		// eventList.add(e);
+		// appointmentEvent.add(e);
+		// }
+		// }
+		// }
+		// }
+		//
+		// @Override
+		// public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
+		// return eventList;
+		// }
+		//
+		// public AppointmentEvent getAppointmentByStartAndCaption(CalendarEvent
+		// event) {
+		// AppointmentEvent eventReturn = null;
+		//
+		// for (AppointmentEvent e : appointmentEvent) {
+		// if (e.getStart() == event.getStart()) {
+		// if (e.getEnd() == event.getEnd()) {
+		// eventReturn = e;
+		// }
+		// }
+		//
+		// }
+		// return eventReturn;
 	}
 
 }
