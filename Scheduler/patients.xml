@@ -44,7 +44,7 @@
     <phoneNumber>234</phoneNumber>
     <referral>asdf</referral>
     <paymentType>asdf</paymentType>
-    <email>sadf</email>
+    <email>Email</email>
     <appointments/>
   </patient>
 </patients>
