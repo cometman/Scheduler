@@ -30,7 +30,7 @@ public class EventPanel extends Panel {
 	private void createPanelBaseTemplate() {
 		panelObject.setWidth("100%");
 		panelObject.setHeight("20%");
-		panelObject.add
+//		panelObject.add
 	}
 
 }

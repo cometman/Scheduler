@@ -21,21 +21,23 @@ public class CalendarTab extends NavigationView implements ClickListener {
 	private GregorianCalendar gregCal = new GregorianCalendar();
 	private String caption;
 	private CalendarPanel panel;
+	private ProviderModel model;
 
 	public CalendarTab() {
 
 		if (panel == null) {
 			panel = new CalendarPanel();
+			model = (ProviderModel) MyVaadinApplication.get().getUser();
 		}
 		caption = dateFormat.format(gregCal.getTime());
 		setContent(panel);
 		this.setCaption(caption);
+		System.out.println();
 
 	}
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-		
 
 	}
 

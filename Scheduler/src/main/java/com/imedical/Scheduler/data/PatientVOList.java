@@ -22,4 +22,8 @@ public class PatientVOList {
 	public void removePatient(PatientVO f) {
 		patients.remove(f);
 	}
+
+	public void setPatients(List<PatientVO> patients) {
+		this.patients = patients;
+	}
 }

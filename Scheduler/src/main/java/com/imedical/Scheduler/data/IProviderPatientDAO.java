@@ -52,6 +52,14 @@ public interface IProviderPatientDAO {
 	 */
 	public void removePatient(ProviderModel providerModel, PatientVO patient);
 
+	/**
+	 * Update a patient record
+	 * 
+	 * @param providerModel
+	 * @param patient
+	 */
+	public void updateRecord(ProviderModel providerModel, PatientVO patient);
+
 	public PatientVO getPatientByID(int ID);
 
 	public boolean isProviderEmailValid(String email);

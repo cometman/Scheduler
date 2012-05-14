@@ -27,6 +27,7 @@ public class PatientForm extends Form implements Serializable {
 	private static final String APPOINTMENTS = "appointments";
 	private static final String NEXT_APPOINTMENT = "nextAppointmentEvent";
 	private boolean isNewPatient = false;
+	private Form appointmentForm;
 
 	public PatientForm(PatientVO patient) {
 		BeanItem<PatientVO> patientBean = new BeanItem<PatientVO>(patient);
@@ -69,24 +70,39 @@ public class PatientForm extends Form implements Serializable {
 		PopupDateField nextAppointmentField = new PopupDateField();
 		// nextAppointmentField.setPropertyDataSource(patientBean
 		// .getItemProperty(NEXT_APPOINTMENT));
-		if (patientBean.getItemProperty(NEXT_APPOINTMENT) == null) {
+		if (patientBean.getItemProperty(NEXT_APPOINTMENT).getValue() == null) {
 			nextAppointmentField.setInputPrompt("No appointment scheduled");
 		}
 		nextAppointmentField.setInputPrompt(patientBean.getItemProperty(
 				NEXT_APPOINTMENT).toString());
 		nextAppointmentField.setCaption("Next Appointment");
+		nextAppointmentField.setWidth("50%");
+		nextAppointmentField.setStyleName("next-appointment-field");
+		nextAppointmentField.setImmediate(true);
+
+		nextAppointmentField.addListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(
+					com.vaadin.data.Property.ValueChangeEvent event) {
+				System.out.println("Dates chaging");
+				appointmentForm.setVisible(true);
+
+			}
+		});
+
 		this.addField(NEXT_APPOINTMENT, nextAppointmentField);
-		nextAppointmentField.setReadOnly(false);
+		nextAppointmentField.setReadOnly(true);
 		referenceBean = patientBean;
 
 	}
 
 	public void existingPatientContent(BeanItem<PatientVO> patientBean) {
-//		setEditStatus(false);
+		// setEditStatus(false);
 		for (Object o : patientBean.getItemPropertyIds()) {
 			this.getField(NEXT_APPOINTMENT).setVisible(false);
 			this.getField(APPOINTMENTS).setVisible(false);
-			this.getItemProperty(o).setReadOnly(true);
+
 		}
 	}
 
@@ -113,6 +129,12 @@ public class PatientForm extends Form implements Serializable {
 	public void setPatient(PatientVO patients) {
 		this.patient = patients;
 
+	}
+
+	public void setAppointmentForm(Form appointmentForm) {
+		if (appointmentForm != null) {
+			this.appointmentForm = appointmentForm;
+		}
 	}
 
 	public PatientVO getPatient() {

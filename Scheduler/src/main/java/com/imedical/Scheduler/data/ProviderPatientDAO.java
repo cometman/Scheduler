@@ -312,7 +312,6 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 							File downloadedXML = boxio.retrieveFile(
 									file.getId(), providerModel.getProvider());
 
-							
 							String stringFromFile = this
 									.getStringContentsFromFile(downloadedXML);
 							if (stringFromFile.length() > 0) {
@@ -372,6 +371,30 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		patients = (PatientVOList) xstream.fromXML(xmlFile);
 
 		return patients;
+
+	}
+
+	@Override
+	public void updateRecord(ProviderModel providerModel, PatientVO patient) {
+		PatientVOList patientList = this
+				.createPatientsAndAppointmentFromXML(providerModel);
+
+		List<PatientVO> patients = patientList.getPatients();
+
+		// Locate the patient by the patient ID
+		for (PatientVO p : patients) {
+			if (p.getUniqueId() == patient.getUniqueId()) {
+				// Set the old patient object equal to the new patient changes
+				patientList.removePatient(p);
+				patientList.addPatient(patient);
+				// Update the Provider Model list
+
+				break;
+
+			}
+		}
+
+		pushToBox(providerModel, patientList);
 
 	}
 

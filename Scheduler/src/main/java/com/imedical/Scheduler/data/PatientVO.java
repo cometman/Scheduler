@@ -135,4 +135,28 @@ public class PatientVO {
 
 	}
 
+	@Override
+	public String toString() {
+		System.out.println("ID: " + uniqueId);
+		System.out.println("FName: " + firstName);
+		System.out.println("Lname: " + lastName);
+		System.out.println("MName: " + middleName);
+		System.out.println("Age: " + age);
+		if (referral != null) {
+			System.out.println("Referral: " + referral);
+		}
+
+		if (appointments != null && appointments.size() > 0) {
+			System.out.println("Appoingments: ");
+			for (AppointmentEvent event : appointments) {
+				System.out.println(event.getCaption());
+				System.out.println(event.getDescription());
+				System.out.println(event.getStart().toString());
+				System.out.println(event.getEnd().toString());
+
+			}
+		}
+		return super.toString();
+	}
+
 }
