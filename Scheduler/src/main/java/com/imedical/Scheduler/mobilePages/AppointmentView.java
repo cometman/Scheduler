@@ -82,8 +82,8 @@ public class AppointmentView extends NavigationView implements ClickListener {
 		// Add a custom field for duration in 15 minute increments
 		BeanItemContainer<String> durationChoices = new BeanItemContainer<String>(
 				String.class);
-		durationChoices.addBean(new String("15 "));
-		durationChoices.addBean(new String("30 "));
+		durationChoices.addBean(new String("15"));
+		durationChoices.addBean(new String("30"));
 		durationChoices.addBean(new String("45"));
 		durationChoices.addBean(new String("60"));
 		durationChoices.addBean(new String("75"));
@@ -93,7 +93,7 @@ public class AppointmentView extends NavigationView implements ClickListener {
 		appointmentForm.addField("duration", durationSelect);
 		panel.setFirstComponent(appointmentForm);
 		panel.setSecondComponent(saveButton);
-		
+
 		this.setContent(panel);
 
 	}
@@ -128,6 +128,20 @@ public class AppointmentView extends NavigationView implements ClickListener {
 				"description").getValue());
 		Date startTime = (Date) appointmentForm.getField("start").getValue();
 		newAppointment.setStart(startTime);
+		Calendar endTime = Calendar.getInstance();
+		endTime.setTime(startTime);
+
+		int duration = Integer.valueOf(((String) appointmentForm.getField(
+				"duration").getValue()));
+
+		endTime.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE) + duration);
+		newAppointment.setEnd(endTime.getTime());
+
+		System.out.println(newAppointment.getCaption());
+		System.out.println(newAppointment.getDescription());
+		System.out.println(newAppointment.getStart());
+		System.out.println(newAppointment.getEnd());
+		System.out.println(newAppointment.getPatientVO().getFirstName());
 
 	}
 }
