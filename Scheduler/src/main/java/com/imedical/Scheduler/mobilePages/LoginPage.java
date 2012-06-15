@@ -2,6 +2,7 @@ package com.imedical.Scheduler.mobilePages;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.ProviderVO;
+import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -51,14 +52,13 @@ public class LoginPage extends Window implements ClickListener {
 			providerModel = new ProviderModel(username.getValue().toString(),
 					password.getValue().toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			SchedulerException.displayErrorMessage("Problem logging in..");
 		}
 
 		if (providerModel.getAuthStatus() == true) {
 			this.getApplication().setUser(user);
 		} else {
-			System.out.println("Problem logging in..");
+			SchedulerException.displayErrorMessage("Problem logging in..");
 		}
 	}
 

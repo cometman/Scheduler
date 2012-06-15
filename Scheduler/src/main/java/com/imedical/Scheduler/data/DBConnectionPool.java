@@ -2,6 +2,7 @@ package com.imedical.Scheduler.data;
 
 import java.sql.SQLException;
 
+import com.imedical.common.SchedulerException;
 import com.vaadin.addon.sqlcontainer.SQLContainer;
 import com.vaadin.addon.sqlcontainer.connection.JDBCConnectionPool;
 import com.vaadin.addon.sqlcontainer.connection.SimpleJDBCConnectionPool;
@@ -39,8 +40,7 @@ public class DBConnectionPool {
 		try {
 			container = new SQLContainer(tq);
 		} catch (SQLException e) {
-			System.out.println("problem gettign the provider container..");
-			e.printStackTrace();
+			SchedulerException.displayErrorMessage("Problem connecting to the Box.net Datasource!");
 		}
 		return container;
 	}

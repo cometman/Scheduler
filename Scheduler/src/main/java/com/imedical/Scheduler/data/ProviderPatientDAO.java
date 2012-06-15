@@ -23,6 +23,7 @@ import com.imedical.box.accountTree.FileVO;
 import com.imedical.box.accountTree.FolderVO;
 import com.imedical.box.accountTree.XStreamHelper;
 import com.imedical.common.LogUtil;
+import com.imedical.common.PropertyLoader;
 import com.imedical.model.ProviderModel;
 import com.thoughtworks.xstream.XStream;
 import com.vaadin.addon.sqlcontainer.SQLContainer;
@@ -41,6 +42,9 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 	private DBConnectionPool connectionPool = new DBConnectionPool();
 	private SQLContainer container;
 	private ProviderVO provider;
+	private ProviderModel providerModel = (ProviderModel) MyVaadinApplication
+			.get().getUser();
+	private List<AppointmentEvent> appointments;
 
 	private IBoxIOData boxio = new BoxIOData();
 
@@ -117,50 +121,62 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 	@Override
 	public ProviderVO getProvider(String email, String password)
 			throws Exception {
+		PropertyLoader
+				.loadProperties(PropertyLoader.ENVIRONENT_PROPERTIES_FILE);
 
-		container = connectionPool.getProviderContainer();
-		// Object positionInDB = container.firstItemId();
-		//
-		// while (positionInDB != null) {
-		// if (container.getItem(positionInDB).getItemProperty("username")
-		// .toString().equals(userid)) {
-		// if (container.getItem(positionInDB).getItemProperty("password")
-		// .toString().equals(password)) {
-		// provider = new ProviderVO();
-		// provider.setPassword(password);
-		// break;
-		// } else {
-		// System.out.println("Bad password");
-		// break;
-		// }
-		// } else {
-		// positionInDB = container.nextItemId(positionInDB);
-		// }
-		// }
+		// Make sure we are not in test mode
+		if (!PropertyLoader.getEnvironment().equals(PropertyLoader.TEST)) {
+			container = connectionPool.getProviderContainer();
+			// Object positionInDB = container.firstItemId();
+			//
+			// while (positionInDB != null) {
+			// if (container.getItem(positionInDB).getItemProperty("username")
+			// .toString().equals(userid)) {
+			// if (container.getItem(positionInDB).getItemProperty("password")
+			// .toString().equals(password)) {
+			// provider = new ProviderVO();
+			// provider.setPassword(password);
+			// break;
+			// } else {
+			// System.out.println("Bad password");
+			// break;
+			// }
+			// } else {
+			// positionInDB = container.nextItemId(positionInDB);
+			// }
+			// }
 
-		container.addContainerFilter(new Compare.Equal("email", email));
-		container.addContainerFilter(new Compare.Equal("password", password));
-		try {
-			container.commit();
-		} catch (UnsupportedOperationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+			container.addContainerFilter(new Compare.Equal("email", email));
+			container
+					.addContainerFilter(new Compare.Equal("password", password));
+			try {
+				container.commit();
+			} catch (UnsupportedOperationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
 
-			e.printStackTrace();
-		}
+				e.printStackTrace();
+			}
 
-		if (container.size() > 0) {
-			Object providerID = container.firstItemId();
-			provider = loadProvider(providerID);
-			container.removeAllContainerFilters();
-			return provider;
-		} else {
-			container.removeAllContainerFilters();
-			// TODO HANDLE THIS EXCEPTION!
-			return null;
-			// throw new Exception(
-			// "No provider's for that email/password were found!");
+			if (container.size() > 0) {
+				Object providerID = container.firstItemId();
+				provider = loadProvider(providerID);
+				container.removeAllContainerFilters();
+				return provider;
+			} else {
+				container.removeAllContainerFilters();
+				// TODO HANDLE THIS EXCEPTION!
+				return null;
+				// throw new Exception(
+				// "No provider's for that email/password were found!");
+			}
+		} 
+		// Otherwise we are in test, so return a test provider
+		else {
+
+			ProviderVO testProvider = PropertyLoader.getTestProvider();
+			return testProvider;
 		}
 
 	}
@@ -187,9 +203,23 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 	}
 
 	@Override
-	public List<AppointmentEvent> getAppointments(String providerID) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AppointmentEvent> getAppointments() {
+		appointments = new ArrayList<AppointmentEvent>();
+
+		patientList = getAllPatients(providerModel);
+
+		for (PatientVO patient : patientList) {
+			appointments.addAll(patient.getAppointments());
+		}
+		return appointments;
+	}
+
+	@Override
+	public List<AppointmentEvent> getAppointmentCached() {
+		if (appointments == null) {
+			getAppointments();
+		}
+		return appointments;
 	}
 
 	@Override

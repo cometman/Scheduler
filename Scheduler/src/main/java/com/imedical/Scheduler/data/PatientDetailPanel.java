@@ -24,7 +24,7 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	private ProviderModel providerModel = (ProviderModel) MyVaadinApplication
 			.get().getUser();
 	private PatientVO patient;
-	private IProviderPatientDAO pdao = new ProviderPatientDAO();
+	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance().getImplementation();
 
 	// Constructor for existing patients
 	public PatientDetailPanel(PatientVO patient) {

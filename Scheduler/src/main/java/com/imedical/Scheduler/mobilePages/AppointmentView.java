@@ -1,12 +1,18 @@
 package com.imedical.Scheduler.mobilePages;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.imedical.Scheduler.MyVaadinApplication;
+import com.imedical.Scheduler.data.IProviderPatientDAO;
+import com.imedical.Scheduler.data.PatientDAOFactory;
 import com.imedical.Scheduler.data.PatientVO;
+import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.common.SchedulerErrorCodes;
 import com.imedical.common.SchedulerException;
+import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -15,6 +21,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalSplitPanel;
 
@@ -24,14 +31,16 @@ import com.vaadin.ui.VerticalSplitPanel;
  * @author Clay
  * 
  */
-public class AppointmentView extends NavigationView implements ClickListener {
+public class AppointmentView extends NavigationView{ //implements ClickListener {
 
 	private static final long serialVersionUID = 4927846137499446876L;
 	private AppointmentEvent appointment;
 	private PatientVO patient;
 	private Form appointmentForm;
 	private VerticalSplitPanel panel = new VerticalSplitPanel();
-	private Button saveButton = new Button("Save", this);
+	private Button saveButton = new Button("Save");
+	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance().getImplementation();
+	private ProviderModel providerModel;
 
 	/**
 	 * Default constructor. If the appointment is null, this is a new
@@ -78,7 +87,10 @@ public class AppointmentView extends NavigationView implements ClickListener {
 		appointmentForm.getField("patientVO").setVisible(false);
 		appointmentForm.getField("styleName").setVisible(false);
 		appointmentForm.getField("end").setVisible(false);
-
+		appointmentForm.getField("start").setVisible(false);
+		PopupDateField dateField = new PopupDateField();
+		dateField.setDateFormat("MM-dd-yyyy hh:mm");
+	
 		// Add a custom field for duration in 15 minute increments
 		BeanItemContainer<String> durationChoices = new BeanItemContainer<String>(
 				String.class);
@@ -90,6 +102,7 @@ public class AppointmentView extends NavigationView implements ClickListener {
 		durationChoices.addBean(new String("90"));
 
 		ListSelect durationSelect = new ListSelect("Duration", durationChoices);
+		appointmentForm.addField("start", dateField);
 		appointmentForm.addField("duration", durationSelect);
 		panel.setFirstComponent(appointmentForm);
 		panel.setSecondComponent(saveButton);
@@ -111,13 +124,16 @@ public class AppointmentView extends NavigationView implements ClickListener {
 	public void buildNewAppointment() {
 
 	}
-
+	
+	public void setSaveListener(ClickListener listener){
+		saveButton.addListener(listener);
+	}
 	/**
 	 * Save button click handler. Add the appointment to patient object, update
 	 * the database, then navigate back to patient record.
 	 */
-	@Override
-	public void buttonClick(ClickEvent event) {
+	
+	public AppointmentEvent createNewAppointment() {
 		// Create the new appointment based on form results
 		AppointmentEvent newAppointment = new AppointmentEvent();
 		newAppointment.setPatientVO(patient);
@@ -136,12 +152,19 @@ public class AppointmentView extends NavigationView implements ClickListener {
 
 		endTime.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE) + duration);
 		newAppointment.setEnd(endTime.getTime());
-
-		System.out.println(newAppointment.getCaption());
-		System.out.println(newAppointment.getDescription());
-		System.out.println(newAppointment.getStart());
-		System.out.println(newAppointment.getEnd());
-		System.out.println(newAppointment.getPatientVO().getFirstName());
-
+		
+		// Add the appointment to the patient's appointments
+		patient.addAppointment(newAppointment);
+		
+		// Fetch the provider model
+		providerModel = (ProviderModel) MyVaadinApplication.get().getUser();
+		
+		// Update the database
+		pdao.updateRecord(providerModel, patient);
+		
+		// Navigate back to the patient's detail view.
+		this.getNavigationManager().navigateBack();
+		
+		return newAppointment;
 	}
 }

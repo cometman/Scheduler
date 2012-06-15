@@ -1,16 +1,23 @@
 package com.imedical.controller;
 
+import javax.swing.ButtonModel;
+
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderVO;
+import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+import com.imedical.Scheduler.data.calendar.CalendarPanel;
+import com.imedical.Scheduler.mobilePages.AppointmentView;
 import com.imedical.Scheduler.mobilePages.CalendarTab;
 import com.imedical.Scheduler.mobilePages.LoginPage;
 import com.imedical.Scheduler.mobilePages.MainTabSheet;
 import com.imedical.Scheduler.mobilePages.NewPatientPage;
+import com.imedical.Scheduler.mobilePages.PatientDetailView;
 import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
 import com.imedical.Scheduler.mobilePages.SettingsTab;
 import com.imedical.box.userregistration.RegisterNewUser;
+import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
@@ -20,6 +27,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
 import com.vaadin.ui.ComponentContainer.ComponentAttachListener;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 
@@ -41,6 +49,9 @@ public class Controller {
 	private RegisterWindow registerWindow;
 	private LoginPage loginPage;
 	private RegisterNewUser registerNewUser;
+	private PatientDetailView detailView;
+	private AppointmentView appointmentView;
+	private CalendarPanel calendarPanel;
 
 	/*
 	 * Tab Bar View - Add the tabs to the view and setup the views by passing in
@@ -54,14 +65,18 @@ public class Controller {
 		mainWindow.setContent(t_view);
 		MainTabSheetListener(t_view);
 
+		calendarPanel = new CalendarPanel();
 		patientTab = new PatientTab(this.model);
-		calendarTab = new CalendarTab();
+		calendarTab = new CalendarTab(calendarPanel);
 		settingsTab = new SettingsTab();
 
 		mainTabSheet.addTab(patientTab, "Patients");
 		mainTabSheet.addTab(calendarTab, "Calendar");
 		mainTabSheet.addTab(settingsTab, "Settings");
+
 		buildPatientTab();
+
+		// Add listener to the calendar tab
 	}
 
 	public Controller(NavigationView view, ProviderModel model) {
@@ -135,7 +150,8 @@ public class Controller {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} finally {
-							// Redirect the user to the login page.  This will be their first login..
+							// Redirect the user to the login page. This will be
+							// their first login..
 							registerWindow.setVisible(false);
 							loginPage.setVisible(true);
 
@@ -173,7 +189,21 @@ public class Controller {
 		@Override
 		public void valueChange(ValueChangeEvent event) {
 			PatientVO patient = (PatientVO) table.getValue();
-			patientTab.showDetailView(patient);
+			detailView = new PatientDetailView(patient, patientTab
+					.getPatientTable().getTable());
+
+			// Add the new appointment listener to the patient detail view
+
+			patientTab.showDetailView(detailView);
+			try {
+				appointmentView = new AppointmentView(null,
+						detailView.getPatient());
+				appointmentView.setSaveListener(new SaveAppointmentListener());
+			} catch (SchedulerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			detailView.setAppointmentListener(new AppointmentListener());
 		}
 	}
 
@@ -186,6 +216,43 @@ public class Controller {
 			System.out.println("click");
 
 			patientTab.addNewPatient();
+
+		}
+
+	}
+
+	/***********************************************************************
+	 * APPOINTMENT TAB SETUP
+	 * *********************************************************************
+	 */
+
+	/*
+	 * Handler for navigating to the appointment page when new appointment is
+	 * clicked.
+	 */
+	class AppointmentListener implements ClickListener {
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+
+			detailView.navigateToAppointmentView(appointmentView);
+
+		}
+	}
+
+	/*
+	 * Handler for saving appointments
+	 */
+	class SaveAppointmentListener implements ClickListener {
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+		
+			AppointmentEvent appointment = appointmentView
+					.createNewAppointment();
+
+			calendarPanel.addNewEvent(appointment);
+			calendarTab.requestRepaintAll();
 
 		}
 

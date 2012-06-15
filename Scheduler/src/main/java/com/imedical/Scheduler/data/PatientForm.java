@@ -92,6 +92,7 @@ public class PatientForm extends Form implements Serializable {
 		});
 
 		this.addField(NEXT_APPOINTMENT, nextAppointmentField);
+		this.getField("uniqueId").setVisible(false);
 		nextAppointmentField.setReadOnly(true);
 		referenceBean = patientBean;
 
@@ -99,6 +100,7 @@ public class PatientForm extends Form implements Serializable {
 
 	public void existingPatientContent(BeanItem<PatientVO> patientBean) {
 		// setEditStatus(false);
+	
 		for (Object o : patientBean.getItemPropertyIds()) {
 			this.getField(NEXT_APPOINTMENT).setVisible(false);
 			this.getField(APPOINTMENTS).setVisible(false);
@@ -134,6 +136,7 @@ public class PatientForm extends Form implements Serializable {
 	public void setAppointmentForm(Form appointmentForm) {
 		if (appointmentForm != null) {
 			this.appointmentForm = appointmentForm;
+		
 		}
 	}
 

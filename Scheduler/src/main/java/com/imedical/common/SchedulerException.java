@@ -11,7 +11,7 @@ public class SchedulerException extends Exception {
 		displayErrorMessage(SchedulerErrorCodes.getErrorMessage(errorCode));
 	}
 
-	private void displayErrorMessage(String errorMessage) {
+	public static void displayErrorMessage(String errorMessage) {
 		MyVaadinApplication
 				.get()
 				.getMainWindow()

@@ -11,4 +11,6 @@
     
 
     
+
+    <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 </module>

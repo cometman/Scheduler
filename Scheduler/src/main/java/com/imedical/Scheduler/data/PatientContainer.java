@@ -31,7 +31,7 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 
 	public PatientContainer loadInitialData(ProviderModel model) {
 		if (patientDAO == null) {
-			patientDAO = new ProviderPatientDAO();
+			patientDAO = PatientDAOFactory.getInstance().getImplementation();
 			patients = patientDAO
 					.getAllPatients(model);
 		}

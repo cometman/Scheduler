@@ -3,9 +3,12 @@ package com.imedical.Scheduler.component.calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.imedical.Scheduler.data.IProviderPatientDAO;
+import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.common.SchedulerErrorCodes;
 import com.imedical.common.SchedulerException;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Panel;
 
 /**
@@ -46,7 +49,7 @@ import com.vaadin.ui.Panel;
 public class EventPanelFactory {
 
 	private static final long serialVersionUID = 3748940880483857297L;
-	private List<AppointmentEvent> appointments = new ArrayList<AppointmentEvent>();
+	private BeanItemContainer<AppointmentEvent> appointments;
 	private List<EventPanel> populatedPanels = new ArrayList<EventPanel>();
 
 	/**
@@ -56,7 +59,7 @@ public class EventPanelFactory {
 	 * @param appointments
 	 * @throws SchedulerException
 	 */
-	public EventPanelFactory(List<AppointmentEvent> appointments)
+	public EventPanelFactory(BeanItemContainer<AppointmentEvent> appointments)
 			throws SchedulerException {
 		if (appointments != null) {
 			this.appointments = appointments;
@@ -70,10 +73,16 @@ public class EventPanelFactory {
 	 * Create an event panel object for every appointment
 	 */
 	private void createEventPanels() {
-		for (AppointmentEvent appointment : appointments) {
+		for (AppointmentEvent appointment : appointments.getItemIds()) {
 			EventPanel eventPanel = new EventPanel(appointment);
-			populatedPanels.add(eventPanel);
+			populatedPanels.add(eventPanel.getPanel());
 		}
+	}
+	
+	public EventPanel createNewEventPanel(AppointmentEvent event){
+		EventPanel eventPanel = new EventPanel(event);
+		
+		return eventPanel;
 	}
 
 	/**

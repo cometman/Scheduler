@@ -3,14 +3,19 @@ package com.imedical.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.PropertyException;
+
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.IProviderPatientDAO;
+import com.imedical.Scheduler.data.PatientDAOFactory;
 import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderVO;
+import com.imedical.Scheduler.data.TestProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.box.BoxIOData;
 import com.imedical.box.Box_Finals;
@@ -20,6 +25,7 @@ import com.imedical.box.accountTree.FolderVO;
 import com.imedical.box.userregistration.RegisterNewUser;
 import com.imedical.box.userregistration.RegisterUserBox;
 import com.imedical.common.LogUtil;
+import com.imedical.common.PropertyLoader;
 import com.vaadin.data.Item.PropertySetChangeEvent;
 import com.vaadin.data.Item.PropertySetChangeListener;
 import com.vaadin.data.Property;
@@ -28,12 +34,13 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractSelect.NewItemHandler;
+import com.vaadin.ui.Window.Notification;
 
 public class ProviderModel {
 	private ProviderVO provider;
 	private List<PatientVO> patients = new ArrayList<PatientVO>();
 	private List<AppointmentEvent> appointments = new ArrayList<AppointmentEvent>();
-	private IProviderPatientDAO ipatientDAO = new ProviderPatientDAO();
+	private IProviderPatientDAO ipatientDAO = PatientDAOFactory.getInstance().getImplementation();
 	private boolean authStatus = false;
 	private String schedulerFileID;
 	private String schedulerFodlerID;
@@ -45,9 +52,11 @@ public class ProviderModel {
 
 		provider = ipatientDAO.getProvider(userID, password);
 
-		if (this.getProvider() != null) {
+		if (this.getProvider() != null && PropertyLoader.isProd()) {
 			authStatus = true;
 			setProviderDataFileID(provider);
+		} else if (this.getProvider() != null && PropertyLoader.isTest()) {
+			authStatus = true;
 		}
 		// setProviderDataFileID(provider);
 		// // Set the local data source equal to the file from Box.net
@@ -94,7 +103,7 @@ public class ProviderModel {
 	// TODO - Look at takign this out..we may need only to get patient objects..
 	public List<AppointmentEvent> setAppointmentsForModel(String providerID) {
 		List<AppointmentEvent> appointments = new ArrayList<AppointmentEvent>();
-		appointments.addAll(ipatientDAO.getAppointments(providerID));
+		appointments.addAll(ipatientDAO.getAppointments());
 		return appointments;
 	}
 
@@ -103,6 +112,7 @@ public class ProviderModel {
 	}
 
 	public void setProviderDataFileID(ProviderVO provider) {
+
 		FolderVO providerAccount = boxIOData.createAccoutTreePOJO(boxIOData
 				.getAccountTreeXML(0, provider));
 
@@ -147,7 +157,6 @@ public class ProviderModel {
 						uploadedFileID = file.getId();
 					}
 				}
-				// }
 			}
 		}
 	}

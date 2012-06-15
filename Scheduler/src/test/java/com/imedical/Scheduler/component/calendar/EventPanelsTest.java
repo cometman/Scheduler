@@ -37,7 +37,7 @@ public class EventPanelsTest {
 
 		events = new ArrayList<AppointmentEvent>();
 		events.add(testEvent);
-		eventPanelFactory = new EventPanelFactory(events);
+//		eventPanelFactory = new EventPanelFactory(events);
 
 	}
 

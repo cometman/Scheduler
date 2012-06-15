@@ -22,14 +22,15 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table;
 
-public class PatientDetailView extends NavigationView implements ClickListener {
+public class PatientDetailView extends NavigationView {//implements ClickListener {
 	private static final long serialVersionUID = -6881253381664450543L;
 
 	private PatientDetailPanel patientPanel = null;
 	private Table table;
 	private PatientVO patient;
 	private ProviderModel model;
-
+	private Button appointmentButton;
+	
 	// Constructor for EXISITING patients
 	public PatientDetailView(PatientVO patient, Table table) {
 		model = (ProviderModel) MyVaadinApplication.get().getUser();
@@ -39,25 +40,37 @@ public class PatientDetailView extends NavigationView implements ClickListener {
 		this.setCaption(patient.getFirstName() + " " + patient.getLastName());
 
 		this.getLeftComponent().setCaption("Back");
-		this.setRightComponent(new Button("New Appointment", this));
+		appointmentButton = new Button();
+		appointmentButton.setCaption("New Appointment");
+		this.setRightComponent(appointmentButton);
 		// this.getRightComponent().setCaption("Stuff");
 		setContent(patientPanel);
 
+	}
+	
+	public void setAppointmentListener(ClickListener listener){
+		System.out.println("adding listener");
+		appointmentButton.addListener(listener);
+	}
+	
+	public void navigateToAppointmentView(AppointmentView view){
+		System.out.println("here detail view");
+		this.getNavigationManager().navigateTo(view);
 	}
 
 	/**
 	 * Schedule appointment button
 	 */
-	@Override
-	public void buttonClick(ClickEvent event) {
-
-		try {
-			AppointmentView appointmentView = new AppointmentView(null, patient);
-			this.getNavigationManager().navigateTo(appointmentView);
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//	@Override
+//	public void buttonClick(ClickEvent event) {
+//
+//		try {
+//			AppointmentView appointmentView = new AppointmentView(null, patient);
+//			this.getNavigationManager().navigateTo(appointmentView);
+//		} catch (SchedulerException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		// this.getNavigationManager().navigateBack();
 		// PatientVO comparePatient;
 		// System.out.println(patient.getFirstName());
@@ -73,5 +86,9 @@ public class PatientDetailView extends NavigationView implements ClickListener {
 		// // pdao.removePatient(model, patient);
 		// }
 
+//	}
+	
+	public PatientVO getPatient(){
+		return patient;
 	}
 }

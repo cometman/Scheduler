@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.CalendarPanel;
+import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
@@ -20,19 +21,19 @@ public class CalendarTab extends NavigationView implements ClickListener {
 			"EEEE MMM dd yyyy");
 	private GregorianCalendar gregCal = new GregorianCalendar();
 	private String caption;
-	private CalendarPanel panel;
+//	private CalendarPanel panel;
 	private ProviderModel model;
 
-	public CalendarTab() {
+	public CalendarTab(CalendarPanel panel) {
 
-		if (panel == null) {
-			panel = new CalendarPanel();
-			model = (ProviderModel) MyVaadinApplication.get().getUser();
-		}
+		panel = new CalendarPanel();
+
+		model = (ProviderModel) MyVaadinApplication.get().getUser();
+
 		caption = dateFormat.format(gregCal.getTime());
 		setContent(panel);
 		this.setCaption(caption);
-		System.out.println();
+		setImmediate(true);
 
 	}
 

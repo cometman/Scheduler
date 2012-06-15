@@ -1,7 +1,6 @@
-@import "touch";
+@import "../base/styles.css";
 
-.v-button {
-	padding-top: 108px;
-	padding-left: 108px;
+.v-panel-content-eventpanel {
+	background-color: #9F9F9F;
+	margin-bottom: 5px;
 }
-

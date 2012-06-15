@@ -1,11 +1,13 @@
 package com.imedical.Scheduler;
 
+import java.io.IOException;
+
 import com.imedical.Scheduler.data.PatientContainer;
 import com.imedical.Scheduler.mobilePages.LoginPage;
 import com.imedical.Scheduler.mobilePages.MainTabSheet;
 import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
-import com.imedical.common.CreateBoxSession;
+import com.imedical.common.PropertyLoader;
 import com.imedical.controller.Controller;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationBar;
@@ -36,7 +38,14 @@ public class MyVaadinApplication extends TouchKitApplication {
 	LoginPage login;
 
 	public MyVaadinApplication() {
-//		setTheme("imedical");
+		try {
+			PropertyLoader
+			.loadProperties(PropertyLoader.ENVIRONENT_PROPERTIES_FILE);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if (instance == null) {
 			login = new LoginPage();
 			instance = this;
@@ -90,6 +99,7 @@ public class MyVaadinApplication extends TouchKitApplication {
 
 	@Override
 	public void init() {
+		setTheme("imedical");
 		configureMainWindow();
 	}
 

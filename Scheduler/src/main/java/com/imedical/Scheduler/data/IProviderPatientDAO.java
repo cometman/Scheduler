@@ -24,7 +24,9 @@ public interface IProviderPatientDAO {
 	public ProviderVO getProvider(String userid, String password)
 			throws Exception;
 
-	public List<AppointmentEvent> getAppointments(String providerID);
+	public List<AppointmentEvent> getAppointments();
+	
+	public List<AppointmentEvent> getAppointmentCached();
 
 	public List<PatientVO> getPatients(String providerID);
 
