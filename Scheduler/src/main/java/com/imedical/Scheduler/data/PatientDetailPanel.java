@@ -1,20 +1,23 @@
 package com.imedical.Scheduler.data;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.model.ProviderModel;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.data.Item;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
 
 public class PatientDetailPanel extends Panel implements ClickListener {
 	private static final long serialVersionUID = 6339603637916622029L;
@@ -24,7 +27,8 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	private ProviderModel providerModel = (ProviderModel) MyVaadinApplication
 			.get().getUser();
 	private PatientVO patient;
-	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance().getImplementation();
+	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance()
+			.getImplementation();
 
 	// Constructor for existing patients
 	public PatientDetailPanel(PatientVO patient) {
@@ -46,8 +50,54 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 			patientForm.getField(o).setReadOnly(true);
 		}
 
+		// Build patient detail form
+		buildPatientDetailView();
+
 		// Attach the appointment form to the screen, initially hide this form
-		buildAppointmentForm();
+		Form appointmentForm = buildAppointmentForm(null);
+		addComponent(appointmentForm);
+		appointmentForm.setVisible(false);
+
+		
+		patientForm.addField("appointmentsView", createAppointmentsComponent());
+	}
+
+	/**
+	 * Build the for for the patient detail view
+	 */
+	private void buildPatientDetailView() {
+		patientForm.getField("appointments").setVisible(false);
+	}
+
+	/**
+	 * Build the components used to view appointments
+	 */
+	private ComboBox createAppointmentsComponent() {
+		final Map<String, AppointmentEvent> appointmentTimes = new HashMap<String, AppointmentEvent>();
+
+		// Populate the appointment time list with a list of times and the
+		// appointment it is referencing
+		for (AppointmentEvent appt : patient.getAppointments()) {
+			appointmentTimes.put(appt.getStart().toString(),appt);
+		}
+
+		final ComboBox appointmentsCombo = new ComboBox("View appts.",
+				new BeanItemContainer(String.class, appointmentTimes.keySet()));
+
+		appointmentsCombo.setInputPrompt("Select one");
+		//TODO Let the controller handle this navigation...
+		Property.ValueChangeListener listener = new Property.ValueChangeListener() {
+			public void valueChange(ValueChangeEvent event) {
+				// Build the new appointment form when the user selects the time from the list
+				buildAppointmentForm(appointmentTimes.get(appointmentsCombo.getValue()));
+			
+
+			}
+		};
+		appointmentsCombo.addListener(listener);
+		appointmentsCombo.setImmediate(true);
+		return appointmentsCombo;
+
 	}
 
 	/**
@@ -139,12 +189,16 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	 * Display a link to show appointment details. This will toggel on and off
 	 * depending on if next appoitnment is set.
 	 */
-	public void buildAppointmentForm() {
+	public Form buildAppointmentForm(AppointmentEvent event) {
 		// Create the bean for the appointment event
 
+		if (event == null) {
+			event = new AppointmentEvent();
+		}
+
 		Form appointmentForm = new Form();
-		AppointmentEvent event = new AppointmentEvent();
 		event.setPatientVO(patient);
+		
 		BeanItem<AppointmentEvent> appointmentBean = new BeanItem<AppointmentEvent>(
 				event);
 
@@ -156,10 +210,8 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 		appointmentForm.getField("styleName").setVisible(false);
 		appointmentForm.getField("start").setVisible(false);
 		appointmentForm.getField("end").setWidth("50%");
-		patientForm.setAppointmentForm(appointmentForm);
-		
-		this.addComponent(appointmentForm);
-		appointmentForm.setVisible(false);
+		patientForm.setAppointmentForm(appointmentForm);		
+		return appointmentForm;
 	}
 
 	public void addEditButton() {
