@@ -95,10 +95,10 @@ public class TestData {
 		appointment1.setPatientVO(testPatient1);
 		
 		appointment2.setAllDay(false);
-		appointment2.setCaption("Genereal checkup");
-		appointment2.setDescription("Here is some of the description that will take place");
+		appointment2.setCaption("Brain Transplant");
+		appointment2.setDescription("A different one to lookie!");
 		Calendar startCal = Calendar.getInstance();
-		startCal.set(Calendar.HOUR, startCal.get(Calendar.HOUR)+3);
+		startCal.set(Calendar.HOUR, startCal.get(Calendar.HOUR)+1);
 		
 		appointment2.setStart(startCal.getTime());
 		Calendar endCa1l = Calendar.getInstance();

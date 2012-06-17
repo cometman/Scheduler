@@ -1,7 +1,32 @@
 @import "../base/styles.css";
 
-.v-panel-content-eventpanel {
-	background-color: #9F9F9F;
+.v-formlayout-row>td {
+	border-bottom: none ! important;
+}
+
+.appointment-save-button {
+	margin-bottom: -350px;
+}
+
+.v-splitpanel-first-container {
+	height: 80% !important;
+}
+
+.v-splitpanel-second-container {
+	height: 80px !important;
+	top: 80% !important;
+}
+
+.cal-appointment-button {
+	background-color: white;
+	border-style: solid;
 	margin-bottom: 5px;
 	border-radius: 15px;
+	min-height: 60px;
+	overflow: hidden;
+}
+
+.calendar-vertical-layout div.cal-appointment-button {
+	height: 100px;
+	overflow:hidden;
 }

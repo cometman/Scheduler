@@ -14,6 +14,7 @@ import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.Label;
@@ -22,7 +23,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table;
 
-public class PatientDetailView extends NavigationView {//implements ClickListener {
+public class PatientDetailView extends NavigationView {
 	private static final long serialVersionUID = -6881253381664450543L;
 
 	private PatientDetailPanel patientPanel = null;
@@ -30,7 +31,7 @@ public class PatientDetailView extends NavigationView {//implements ClickListene
 	private PatientVO patient;
 	private ProviderModel model;
 	private Button appointmentButton;
-	
+
 	// Constructor for EXISITING patients
 	public PatientDetailView(PatientVO patient, Table table) {
 		model = (ProviderModel) MyVaadinApplication.get().getUser();
@@ -43,52 +44,26 @@ public class PatientDetailView extends NavigationView {//implements ClickListene
 		appointmentButton = new Button();
 		appointmentButton.setCaption("New Appointment");
 		this.setRightComponent(appointmentButton);
-		// this.getRightComponent().setCaption("Stuff");
+
 		setContent(patientPanel);
 
+		// View reference for the panel we are displaying (allows us to access
+		// the navigation manager)
+		patientPanel.setViewReference(this);
+
 	}
-	
-	public void setAppointmentListener(ClickListener listener){
+
+	public void setAppointmentListener(ClickListener listener) {
 		System.out.println("adding listener");
 		appointmentButton.addListener(listener);
 	}
-	
-	public void navigateToAppointmentView(AppointmentView view){
+
+	public void navigateToAppointmentView(AppointmentView view) {
 		System.out.println("here detail view");
 		this.getNavigationManager().navigateTo(view);
 	}
 
-	/**
-	 * Schedule appointment button
-	 */
-//	@Override
-//	public void buttonClick(ClickEvent event) {
-//
-//		try {
-//			AppointmentView appointmentView = new AppointmentView(null, patient);
-//			this.getNavigationManager().navigateTo(appointmentView);
-//		} catch (SchedulerException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		// this.getNavigationManager().navigateBack();
-		// PatientVO comparePatient;
-		// System.out.println(patient.getFirstName());
-		// for (Object item : table.getItemIds()) {
-		// table.removeItem(item);
-		// comparePatient = (PatientVO) item;
-		// if (comparePatient.getUniqueId() == patient.getUniqueId()) {
-		// System.out.println(comparePatient.getFirstName());
-		// System.out.println("ID: "+ item.toString());
-		// table.removeItem(item);
-		// MyVaadinApplication.get().getMainWindow().showNotification("Removing patient");
-		// // IProviderPatientDAO pdao = new ProviderPatientDAO();
-		// // pdao.removePatient(model, patient);
-		// }
-
-//	}
-	
-	public PatientVO getPatient(){
+	public PatientVO getPatient() {
 		return patient;
 	}
 }

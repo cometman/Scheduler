@@ -1,9 +1,9 @@
 package com.imedical.Scheduler.mobilePages;
 
 import java.lang.reflect.InvocationTargetException;
+
 import com.imedical.Scheduler.data.PatientContainer;
 import com.imedical.Scheduler.data.PatientTable;
-import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -12,7 +12,6 @@ import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 
 public class PatientTab extends NavigationManager {
@@ -21,7 +20,6 @@ public class PatientTab extends NavigationManager {
 
 	private Panel contentPanel = new Panel();
 	private PatientTab instance;
-	private PatientDetailView patientDetailView;
 	private PatientContainer patientContainer = new PatientContainer();
 	private TextField searchBar = new TextField();
 	private PatientTable patientTable;
@@ -73,21 +71,14 @@ public class PatientTab extends NavigationManager {
 		navigateTo(contentPanel);
 
 	}
-	
 
-	public void showDetailView(PatientDetailView view){
+	public void showDetailView(PatientDetailView view) {
 		navigateTo(view);
 	}
-//	public void showDetailView(PatientVO patient) {
-//		patientDetailView = new PatientDetailView(patient,
-//				patientTable.getTable());
-//		navigateTo(patientDetailView);
-//	}
 
 	public void addNewPatient() {
 		NewPatientPage newPatientPage = new NewPatientPage(
 				patientTable.getTable(), model);
-		// patientDetailView = new PatientDetailView();
 		navigateTo(newPatientPage);
 	}
 

@@ -7,7 +7,12 @@ import java.util.Map;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
+import com.imedical.Scheduler.mobilePages.AppointmentView;
+import com.imedical.Scheduler.mobilePages.PatientDetailView;
+import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -17,6 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Form;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;
 
 public class PatientDetailPanel extends Panel implements ClickListener {
@@ -29,6 +35,7 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	private PatientVO patient;
 	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance()
 			.getImplementation();
+	private PatientDetailView patientDetailView;
 
 	// Constructor for existing patients
 	public PatientDetailPanel(PatientVO patient) {
@@ -58,7 +65,6 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 		addComponent(appointmentForm);
 		appointmentForm.setVisible(false);
 
-		
 		patientForm.addField("appointmentsView", createAppointmentsComponent());
 	}
 
@@ -72,32 +78,42 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 	/**
 	 * Build the components used to view appointments
 	 */
-	private ComboBox createAppointmentsComponent() {
+	private NativeSelect createAppointmentsComponent() {
 		final Map<String, AppointmentEvent> appointmentTimes = new HashMap<String, AppointmentEvent>();
 
 		// Populate the appointment time list with a list of times and the
 		// appointment it is referencing
 		for (AppointmentEvent appt : patient.getAppointments()) {
-			appointmentTimes.put(appt.getStart().toString(),appt);
+			appointmentTimes.put(appt.getStart().toString(), appt);
 		}
 
-		final ComboBox appointmentsCombo = new ComboBox("View appts.",
+		final NativeSelect appointmentsCombo = new NativeSelect("View appts.",
 				new BeanItemContainer(String.class, appointmentTimes.keySet()));
 
-		appointmentsCombo.setInputPrompt("Select one");
-		//TODO Let the controller handle this navigation...
+		// TODO Let the controller handle this navigation...
 		Property.ValueChangeListener listener = new Property.ValueChangeListener() {
 			public void valueChange(ValueChangeEvent event) {
-				// Build the new appointment form when the user selects the time from the list
-				buildAppointmentForm(appointmentTimes.get(appointmentsCombo.getValue()));
-			
+				// Build the new appointment form when the user selects the time
+				// from the list
+				AppointmentEvent apptEvent = appointmentTimes
+						.get(appointmentsCombo.getValue());
+				buildAppointmentForm(apptEvent);
+				try {
+					AppointmentView appointmentView = new AppointmentView(
+							apptEvent, patient);
+					patientDetailView
+							.navigateToAppointmentView(appointmentView);
+				} catch (SchedulerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		};
 		appointmentsCombo.addListener(listener);
 		appointmentsCombo.setImmediate(true);
-		return appointmentsCombo;
 
+		return appointmentsCombo;
 	}
 
 	/**
@@ -198,7 +214,7 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 
 		Form appointmentForm = new Form();
 		event.setPatientVO(patient);
-		
+
 		BeanItem<AppointmentEvent> appointmentBean = new BeanItem<AppointmentEvent>(
 				event);
 
@@ -210,12 +226,17 @@ public class PatientDetailPanel extends Panel implements ClickListener {
 		appointmentForm.getField("styleName").setVisible(false);
 		appointmentForm.getField("start").setVisible(false);
 		appointmentForm.getField("end").setWidth("50%");
-		patientForm.setAppointmentForm(appointmentForm);		
+		patientForm.setAppointmentForm(appointmentForm);
 		return appointmentForm;
 	}
 
 	public void addEditButton() {
 		addComponent(editInfo);
+	}
+
+	public void setViewReference(PatientDetailView patientDetailView) {
+
+		this.patientDetailView = patientDetailView;
 	}
 
 }

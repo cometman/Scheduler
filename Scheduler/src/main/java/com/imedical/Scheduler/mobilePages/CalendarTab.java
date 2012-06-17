@@ -5,23 +5,17 @@ import java.util.GregorianCalendar;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.CalendarPanel;
-import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
-import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.addon.touchkit.ui.Popover;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component.Listener;
-import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
 
-public class CalendarTab extends NavigationView implements ClickListener {
+public class CalendarTab extends NavigationManager implements ClickListener {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"EEEE MMM dd yyyy");
 	private GregorianCalendar gregCal = new GregorianCalendar();
 	private String caption;
-//	private CalendarPanel panel;
+	// private CalendarPanel panel;
 	private ProviderModel model;
 
 	public CalendarTab(CalendarPanel panel) {
@@ -31,8 +25,10 @@ public class CalendarTab extends NavigationView implements ClickListener {
 		model = (ProviderModel) MyVaadinApplication.get().getUser();
 
 		caption = dateFormat.format(gregCal.getTime());
-		setContent(panel);
-		this.setCaption(caption);
+		panel.setTabReference(this);
+		navigateTo(panel);
+
+		panel.setCaption(caption);
 		setImmediate(true);
 
 	}
@@ -40,6 +36,15 @@ public class CalendarTab extends NavigationView implements ClickListener {
 	@Override
 	public void buttonClick(ClickEvent event) {
 
+	}
+
+	/**
+	 * Navigate to the details of this appointment
+	 * @param view
+	 * The view to navigate to
+	 */
+	public void navigateToAppointmentView(AppointmentView view) {
+		navigateTo(view);
 	}
 
 }

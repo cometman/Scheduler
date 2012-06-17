@@ -21,6 +21,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -31,7 +32,8 @@ import com.vaadin.ui.VerticalSplitPanel;
  * @author Clay
  * 
  */
-public class AppointmentView extends NavigationView{ //implements ClickListener {
+public class AppointmentView extends NavigationView { // implements
+														// ClickListener {
 
 	private static final long serialVersionUID = 4927846137499446876L;
 	private AppointmentEvent appointment;
@@ -39,8 +41,10 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 	private Form appointmentForm;
 	private VerticalSplitPanel panel = new VerticalSplitPanel();
 	private Button saveButton = new Button("Save");
-	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance().getImplementation();
+	private IProviderPatientDAO pdao = PatientDAOFactory.getInstance()
+			.getImplementation();
 	private ProviderModel providerModel;
+	private NativeSelect durationSelect;
 
 	/**
 	 * Default constructor. If the appointment is null, this is a new
@@ -63,13 +67,14 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 		// Check if a new appointment, or existing appointment
 		if (appointment == null) {
 			this.appointment = new AppointmentEvent();
+			buildBaseComponents();
 		} else {
 			this.appointment = appointment;
+			buildBaseComponents();
 			buildExistingAppointment();
 		}
 
 		// Build base components
-		buildBaseComponents();
 
 	}
 
@@ -90,7 +95,13 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 		appointmentForm.getField("start").setVisible(false);
 		PopupDateField dateField = new PopupDateField();
 		dateField.setDateFormat("MM-dd-yyyy hh:mm");
-	
+
+		try {
+			dateField.setValue(appointmentBean.getBean().getStart());
+		} catch (Exception e) {
+			System.out.println("no time to set!");
+		}
+
 		// Add a custom field for duration in 15 minute increments
 		BeanItemContainer<String> durationChoices = new BeanItemContainer<String>(
 				String.class);
@@ -101,21 +112,39 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 		durationChoices.addBean(new String("75"));
 		durationChoices.addBean(new String("90"));
 
-		ListSelect durationSelect = new ListSelect("Duration", durationChoices);
+		durationSelect = new NativeSelect("Duration",
+				durationChoices);
 		appointmentForm.addField("start", dateField);
 		appointmentForm.addField("duration", durationSelect);
+
 		panel.setFirstComponent(appointmentForm);
 		panel.setSecondComponent(saveButton);
+		saveButton.setStyleName("appointment-save-button");
 
 		this.setContent(panel);
 
+	}
+
+	private String computeDuration(AppointmentEvent event) {
+		String duration;
+
+		long difference = (event.getEnd().getTime() - event.getStart()
+				.getTime()) / 1000;
+
+		int timeInMinutes = Math.abs((int) (difference / 60));
+		duration =  String.valueOf(timeInMinutes);;
+		System.out.println(duration);
+		return duration;
 	}
 
 	/**
 	 * Populate screen with existing appointment details
 	 */
 	public void buildExistingAppointment() {
-
+		/*
+		 * Compute the duration and set that as the defeault selected value
+		 */
+		durationSelect.setValue(computeDuration(appointment));
 	}
 
 	/**
@@ -124,15 +153,16 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 	public void buildNewAppointment() {
 
 	}
-	
-	public void setSaveListener(ClickListener listener){
+
+	public void setSaveListener(ClickListener listener) {
 		saveButton.addListener(listener);
 	}
+
 	/**
 	 * Save button click handler. Add the appointment to patient object, update
 	 * the database, then navigate back to patient record.
 	 */
-	
+
 	public AppointmentEvent createNewAppointment() {
 		// Create the new appointment based on form results
 		AppointmentEvent newAppointment = new AppointmentEvent();
@@ -152,19 +182,19 @@ public class AppointmentView extends NavigationView{ //implements ClickListener 
 
 		endTime.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE) + duration);
 		newAppointment.setEnd(endTime.getTime());
-		
+
 		// Add the appointment to the patient's appointments
 		patient.addAppointment(newAppointment);
-		
+
 		// Fetch the provider model
 		providerModel = (ProviderModel) MyVaadinApplication.get().getUser();
-		
+
 		// Update the database
 		pdao.updateRecord(providerModel, patient);
-		
+
 		// Navigate back to the patient's detail view.
 		this.getNavigationManager().navigateBack();
-		
+
 		return newAppointment;
 	}
 }

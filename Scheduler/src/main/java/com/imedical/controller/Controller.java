@@ -23,6 +23,7 @@ import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.addon.touchkit.ui.TabBarView;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
@@ -191,6 +192,7 @@ public class Controller {
 			PatientVO patient = (PatientVO) table.getValue();
 			detailView = new PatientDetailView(patient, patientTab
 					.getPatientTable().getTable());
+			
 
 			// Add the new appointment listener to the patient detail view
 
@@ -225,6 +227,14 @@ public class Controller {
 	 * APPOINTMENT TAB SETUP
 	 * *********************************************************************
 	 */
+	class ExistingAppointmentListener implements ValueChangeListener {
+		@Override
+		public void valueChange(ValueChangeEvent event) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
 
 	/*
 	 * Handler for navigating to the appointment page when new appointment is
@@ -247,7 +257,7 @@ public class Controller {
 
 		@Override
 		public void buttonClick(ClickEvent event) {
-		
+
 			AppointmentEvent appointment = appointmentView
 					.createNewAppointment();
 
