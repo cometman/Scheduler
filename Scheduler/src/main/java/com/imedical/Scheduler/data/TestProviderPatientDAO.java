@@ -2,6 +2,8 @@ package com.imedical.Scheduler.data;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
@@ -140,4 +142,33 @@ public class TestProviderPatientDAO implements IProviderPatientDAO {
 
 	}
 
+	@Override
+	public List<AppointmentEvent> getAppointmentsOnDate(Date date) {
+		List<AppointmentEvent> appts = this.getAppointments();
+		List<AppointmentEvent> validAppts = new ArrayList<AppointmentEvent>();
+
+		// Create calendar objects so we can easily test the days
+		Calendar appointmentsCal = Calendar.getInstance();
+
+		Calendar requestedDateCal = Calendar.getInstance();
+		requestedDateCal.setTime(date);
+
+		// Look through list of appointments and find appointments that start on
+		// the specified day
+		for (AppointmentEvent appointment : appts) {
+			appointmentsCal.setTime(appointment.getStart());
+
+			// Does the year match?
+			if (requestedDateCal.get(Calendar.YEAR) == appointmentsCal
+					.get(Calendar.YEAR)) {
+				// Does the day in the year match?
+				if (requestedDateCal.get(Calendar.DAY_OF_YEAR) == appointmentsCal
+						.get(Calendar.DAY_OF_YEAR)) {
+					validAppts.add(appointment);
+				}
+			}
+		}
+
+		return validAppts;
+	}
 }

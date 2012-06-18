@@ -1,6 +1,6 @@
 package com.imedical.controller;
 
-import javax.swing.ButtonModel;
+import java.util.Date;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.PatientVO;
@@ -11,7 +11,6 @@ import com.imedical.Scheduler.mobilePages.AppointmentView;
 import com.imedical.Scheduler.mobilePages.CalendarTab;
 import com.imedical.Scheduler.mobilePages.LoginPage;
 import com.imedical.Scheduler.mobilePages.MainTabSheet;
-import com.imedical.Scheduler.mobilePages.NewPatientPage;
 import com.imedical.Scheduler.mobilePages.PatientDetailView;
 import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
@@ -28,7 +27,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
 import com.vaadin.ui.ComponentContainer.ComponentAttachListener;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 
@@ -66,7 +64,7 @@ public class Controller {
 		mainWindow.setContent(t_view);
 		MainTabSheetListener(t_view);
 
-		calendarPanel = new CalendarPanel();
+		calendarPanel = new CalendarPanel(new Date());
 		patientTab = new PatientTab(this.model);
 		calendarTab = new CalendarTab(calendarPanel);
 		settingsTab = new SettingsTab();

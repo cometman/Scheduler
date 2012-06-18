@@ -1,8 +1,8 @@
 package com.imedical.Scheduler.data;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.model.ProviderModel;
@@ -24,8 +24,24 @@ public interface IProviderPatientDAO {
 	public ProviderVO getProvider(String userid, String password)
 			throws Exception;
 
+	/**
+	 * Retrieve all appointments for patients. <b>Note</b> Current
+	 * implementation only access database the first time when fetching
+	 * patients.
+	 * 
+	 * @return
+	 */
 	public List<AppointmentEvent> getAppointments();
-	
+
+	/**
+	 * Retrieve appointments between the specified dates
+	 * 
+	 * @param Date
+	 *            The day to return appointments for
+	 * @return
+	 */
+	public List<AppointmentEvent> getAppointmentsOnDate(Date date);
+
 	public List<AppointmentEvent> getAppointmentCached();
 
 	public List<PatientVO> getPatients(String providerID);

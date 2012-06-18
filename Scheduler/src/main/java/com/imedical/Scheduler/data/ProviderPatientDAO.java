@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -171,7 +172,7 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 				// throw new Exception(
 				// "No provider's for that email/password were found!");
 			}
-		} 
+		}
 		// Otherwise we are in test, so return a test provider
 		else {
 
@@ -425,6 +426,25 @@ public class ProviderPatientDAO implements IProviderPatientDAO {
 		}
 
 		pushToBox(providerModel, patientList);
+
+	}
+
+	@Override
+	public List<AppointmentEvent> getAppointmentsOnDate(Date date) {
+
+		List<AppointmentEvent> appts = this.getAppointments();
+		List<AppointmentEvent> validAppts = new ArrayList<AppointmentEvent>();
+
+		// Look through list of appointments and find appointments that start on
+		// the specified day
+		for (AppointmentEvent appointment : appts) {
+			if (date.equals(appointment.getStart())) {
+				validAppts.add(appointment);
+			}
+
+		}
+
+		return validAppts;
 
 	}
 

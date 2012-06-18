@@ -1,6 +1,7 @@
 package com.imedical.Scheduler.mobilePages;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.imedical.Scheduler.MyVaadinApplication;
@@ -11,26 +12,21 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
 public class CalendarTab extends NavigationManager implements ClickListener {
+	private static final long serialVersionUID = -3283231409443456050L;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"EEEE MMM dd yyyy");
-	private GregorianCalendar gregCal = new GregorianCalendar();
-	private String caption;
-	// private CalendarPanel panel;
+	private String dayCaption;
 	private ProviderModel model;
+	private Calendar currentView;
 
 	public CalendarTab(CalendarPanel panel) {
 
-		panel = new CalendarPanel();
-
+		currentView = Calendar.getInstance();
 		model = (ProviderModel) MyVaadinApplication.get().getUser();
-
-		caption = dateFormat.format(gregCal.getTime());
-		panel.setTabReference(this);
+		panel.buildNavigationBar();
 		navigateTo(panel);
-
-		panel.setCaption(caption);
+		panel.setTabReference(this);
 		setImmediate(true);
-
 	}
 
 	@Override
@@ -40,11 +36,29 @@ public class CalendarTab extends NavigationManager implements ClickListener {
 
 	/**
 	 * Navigate to the details of this appointment
+	 * 
 	 * @param view
-	 * The view to navigate to
+	 *            The view to navigate to
 	 */
 	public void navigateToAppointmentView(AppointmentView view) {
 		navigateTo(view);
 	}
 
+	/**
+	 * Used for navigating to the previous days under the Calendar tab.
+	 * 
+	 * @param view
+	 */
+	public void navigateBackwardCalendarView(CalendarPanel view) {
+		navigateBack();
+	}
+
+	/**
+	 * Navigate to the next days under the calendar tab
+	 * 
+	 * @param view
+	 */
+	public void navigateForwardCalendarView(CalendarPanel view) {
+		navigateTo(view);
+	}
 }

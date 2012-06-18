@@ -6,6 +6,7 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
 public class EventPanel extends Panel {
 	// Event to populate panel with
@@ -29,12 +30,13 @@ public class EventPanel extends Panel {
 	 */
 	private void addPatientData() {
 
-		HorizontalLayout horzLayout = new HorizontalLayout();
+		VerticalLayout horzLayout = new VerticalLayout();
 		Label titleLabel = new Label(event.getCaption());
 		Label timeLabel = new Label(event.getStart().toString());
 		horzLayout.addComponent(timeLabel);
 		horzLayout.addComponent(titleLabel);
 		panelObject.addComponent(horzLayout);
+//		horzLayout.setStyleName("calendar-horiz-layout");
 
 	}
 

@@ -20,13 +20,18 @@
 .cal-appointment-button {
 	background-color: white;
 	border-style: solid;
-	margin-bottom: 5px;
 	border-radius: 15px;
 	min-height: 60px;
-	overflow: hidden;
+/* 	overflow: hidden; */
+	padding:10px 10px 10px 10px;
+	margin: 5px 5px 5px 5px;
+/* 	max-width: 99%; */
 }
 
 .calendar-vertical-layout div.cal-appointment-button {
+	text-align: center;
 	height: 100px;
 	overflow:hidden;
+	max-width: 90%;
+	
 }

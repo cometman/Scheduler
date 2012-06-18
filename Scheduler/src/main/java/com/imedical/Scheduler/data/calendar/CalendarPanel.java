@@ -1,5 +1,8 @@
 package com.imedical.Scheduler.data.calendar;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.imedical.Scheduler.MyVaadinApplication;
@@ -13,10 +16,9 @@ import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.event.MouseEvents.ClickListener;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
 
 public class CalendarPanel extends NavigationView {
@@ -29,14 +31,20 @@ public class CalendarPanel extends NavigationView {
 	private VerticalLayout verticalLayout = new VerticalLayout();
 	private List<AppointmentEvent> appointmentEvents;
 	private CalendarTab calTab;
+	private CalendarPanel previousView;
+	private CalendarPanel nextView;
+	private Calendar timeKeeper;
 
 	// Container for the appointment objects to be added to the screen
 	private BeanItemContainer<AppointmentEvent> appointments = new BeanItemContainer<AppointmentEvent>(
 			AppointmentEvent.class);
 
-	public CalendarPanel() {
+	public CalendarPanel(Date dayToView) {
+		timeKeeper = Calendar.getInstance();
+		timeKeeper.setTime(dayToView);
+
 		setImmediate(true);
-		appointmentEvents = pdao.getAppointments();
+		appointmentEvents = pdao.getAppointmentsOnDate(timeKeeper.getTime());
 		providerModel = (ProviderModel) MyVaadinApplication.get().getUser();
 		try {
 			addEvents();
@@ -47,7 +55,7 @@ public class CalendarPanel extends NavigationView {
 		verticalLayout.setSizeFull();
 		verticalLayout.setStyleName("calendar-vertical-layout");
 		setContent(verticalLayout);
-
+//		buildNavigationBar();
 	}
 
 	/**
@@ -107,6 +115,103 @@ public class CalendarPanel extends NavigationView {
 		this.calTab = calTab;
 	}
 
+	public void buildNavigationBar() {
+		Button previousDay = new Button("Back");
+		Button nextDay = new Button("Next");
+		this.setLeftComponent(previousDay);
+		this.setRightComponent(nextDay);
+
+		// this.getLeftComponent().setCaption("Previous");
+		// this.getRightComponent().setCaption("Next");
+
+		previousDay.addListener(new Button.ClickListener() {
+
+			private static final long serialVersionUID = -8806631534302680882L;
+
+			@Override
+			public void buttonClick(Button.ClickEvent event) {
+
+				timeKeeper.set(Calendar.DAY_OF_MONTH,
+						timeKeeper.get(Calendar.DAY_OF_MONTH) - 1);
+				calTab.navigateBackwardCalendarView(createPreviousView());
+				
+
+			}
+		});
+
+		nextDay.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = -1925434088605606965L;
+
+			@Override
+			public void buttonClick(Button.ClickEvent event) {
+				// Subtract one day from the current time
+				timeKeeper.set(Calendar.DAY_OF_MONTH,
+						timeKeeper.get(Calendar.DAY_OF_MONTH) + 1);
+				calTab.navigateForwardCalendarView(createNextView());
+
+			}
+		});
+	}
+
+	public CalendarPanel createPreviousView() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MMM dd yyyy");
+		// Set the calendar instance equal to the currentDate object
+		// calInstance.setTime(currentDate);
+
+		// Subtract one day from the current time
+
+		// Update the current date reference
+		// currentDate = calInstance.getTime();
+
+		CalendarPanel calPanel = new CalendarPanel(timeKeeper.getTime());
+		System.out.println("From here" +timeKeeper.getTime().toString());
+		String dayCaption = dateFormat.format(timeKeeper.getTime());
+		calPanel.buildNavigationBar();
+
+		calPanel.setCaption(dayCaption);
+
+		// Reference for the CalendarTab so that we can access the nav manager
+		calPanel.setTabReference(calTab);
+
+		// Create the new CalendarPanel object
+
+		return calPanel;
+
+	}
+
+	public CalendarPanel getPreviousView() {
+
+		previousView = createPreviousView();
+
+		return previousView;
+	}
+
+	public CalendarPanel getNextView() {
+
+		nextView = createNextView();
+
+		return nextView;
+	}
+
+	public CalendarPanel createNextView() {
+		// Calendar calInstance = Calendar.getInstance();
+
+		// Set the calendar instance equal to the currentDate object
+		// calInstance.setTime(currentDate);
+
+		// Update the current date reference
+		// currentDate = calInstance.getTime();
+
+		CalendarPanel calPanel = new CalendarPanel(timeKeeper.getTime());
+		System.out.println(timeKeeper.getTime().toString());
+		calPanel.buildNavigationBar();
+		// Reference for the CalendarTab so that we can access the nav manager
+		calPanel.setTabReference(calTab);
+
+		// Create the new CalendarPanel object
+	
+		return calPanel;
+	}
 }
 // Fetch the provider model
 
