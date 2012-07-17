@@ -85,7 +85,7 @@ public class TestData {
 		testPatient3.setUniqueId(3);
 		
 //		testModel.setProviderDataFileID(testProvider);
-		appointment1.setAllDay(false);
+//		appointment1.setAllDay(false);
 		appointment1.setCaption("Genereal checkup");
 		appointment1.setDescription("Here is some of the description that will take place");
 		appointment1.setStart(new Date());
@@ -94,7 +94,7 @@ public class TestData {
 		appointment1.setEnd(Calendar.getInstance().getTime());
 		appointment1.setPatientVO(testPatient1);
 		
-		appointment2.setAllDay(false);
+//		appointment2.setAllDay(false);
 		appointment2.setCaption("Brain Transplant");
 		appointment2.setDescription("A different one to lookie!");
 		Calendar startCal = Calendar.getInstance();

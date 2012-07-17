@@ -21,9 +21,9 @@ public class PatientContainer extends BeanItemContainer<PatientVO> implements
 	private static List<PatientVO> patients = new ArrayList<PatientVO>();
 	private PatientContainer patientContainer;
 	public static final Object[] NATUAL_COL_ORDER = new Object[] { "firstName",
-			"lastName", "phoneNumber" };
+			"lastName"};//, "phoneNumber" };
 	public static final String[] COL_HEADERS_ENGLISH = new String[] {
-			"First name", "Last name", "Phone" };
+			"First name", "Last name"};//, "Phone" };
 
 	public PatientContainer() throws IllegalArgumentException {
 		super(PatientVO.class);

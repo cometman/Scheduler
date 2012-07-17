@@ -20,7 +20,7 @@ public class AppointmentEvent {// implements CalendarEventEditor,
 	private String caption;
 	private String appointmentReason;
 	private String styleName;
-	private boolean isAllDay;
+//	private boolean isAllDay;
 	// private List<EventChangeListener> listeners = new
 	// ArrayList<EventChangeListener>();
 	private PatientVO patientVO;
@@ -46,9 +46,9 @@ public class AppointmentEvent {// implements CalendarEventEditor,
 		return styleName;
 	}
 
-	public boolean isAllDay() {
-		return isAllDay;
-	}
+//	public boolean isAllDay() {
+//		return isAllDay;
+//	}
 
 	public void setCaption(String caption) {
 		this.caption = caption;
@@ -76,10 +76,10 @@ public class AppointmentEvent {// implements CalendarEventEditor,
 	// fireEventChange();
 	// }
 	//
-	public void setAllDay(boolean isAllDay) {
-		this.isAllDay = isAllDay;
-		// fireEventChange();
-	}
+//	public void setAllDay(boolean isAllDay) {
+//		this.isAllDay = isAllDay;
+//		// fireEventChange();
+//	}
 
 	// public void addListener(EventChangeListener listener) {
 	// listeners.add(listener);

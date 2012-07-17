@@ -42,7 +42,8 @@ public class PatientDetailView extends NavigationView {
 
 		this.getLeftComponent().setCaption("Back");
 		appointmentButton = new Button();
-		appointmentButton.setCaption("New Appointment");
+		appointmentButton.setStyleName("new-appt-button");
+//		appointmentButton.setCaption("New Appointment");
 		this.setRightComponent(appointmentButton);
 
 		setContent(patientPanel);

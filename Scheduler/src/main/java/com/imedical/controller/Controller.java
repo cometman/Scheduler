@@ -190,7 +190,6 @@ public class Controller {
 			PatientVO patient = (PatientVO) table.getValue();
 			detailView = new PatientDetailView(patient, patientTab
 					.getPatientTable().getTable());
-			
 
 			// Add the new appointment listener to the patient detail view
 
@@ -282,8 +281,11 @@ public class Controller {
 
 			@Override
 			public void componentAttachedToContainer(ComponentAttachEvent event) {
-				System.out.println(event.getAttachedComponent().getClass()
-						.getSimpleName());
+				if (event.getAttachedComponent().getClass().getSimpleName()
+						.equals("CalendarTab")) {
+					
+
+				}
 			}
 		});
 	}

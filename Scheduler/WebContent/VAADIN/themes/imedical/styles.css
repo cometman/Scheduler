@@ -22,16 +22,110 @@
 	border-style: solid;
 	border-radius: 15px;
 	min-height: 60px;
-/* 	overflow: hidden; */
 	padding:10px 10px 10px 10px;
 	margin: 5px 5px 5px 5px;
+
 /* 	max-width: 99%; */
 }
 
 .calendar-vertical-layout div.cal-appointment-button {
-	text-align: center;
 	height: 100px;
-	overflow:hidden;
-	max-width: 90%;
+/* 	max-width: 70%; */
 	
+}
+
+div.v-panel-content.v-panel-content-cal-appointment-button {
+	text-align: left;
+	width: 200px;
+	overflow: hidden !important;
+}
+
+div.v-verticallayout.v-verticallayout-calendar-vertical-layout.calendar-vertical-layout
+{
+	margin-left: 3%;
+/* 	margin: 0px auto !important; */
+}
+
+div.v-panel.v-panel-cal-appointment-button.cal-appointment-button{
+	min-width: 120%;
+	width: auto !important;
+	margin: 10px auto;
+}
+
+/*
+CSS For new APPOINTMENT VIEWS
+*/
+.caption-css{
+	float:right;
+	margin-right: 20px !important;
+	width: 90%;
+	height: 40px;
+	padding: 10px 10px 10px 10px;	
+}
+
+.description-css
+{
+	float:right;
+	margin-right: 20px !important;
+	width: 90%;
+	height: 40px;
+	padding: 10px 10px 10px 10px;
+}
+
+.startpicker-css
+{
+	float: right !important;
+	margin-right: 20px !important;
+	height: 40px !important;
+	padding: 10px 10px 10px 10px;
+	width: 90%;
+}
+
+.v-splitpanel-vsplitter
+{
+	visibility: hidden;
+}
+
+button.v-datefield-button{
+	-webkit-background-size: 28px 28px;
+	
+}
+
+.v-datefield-button
+{
+	width: 27px !important;
+	padding: 17px 20px 17px 20px;
+}
+
+.v-datefield-popup
+{
+	font-size: 16px !important;
+	height: 80% !important;
+	width: 80% !important
+}
+
+.new-appt-button{
+	background-image: url('plusButton.png') !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	width: 55px !important;
+	height: 33px !important;
+
+}
+.patient-table .v-table-caption-container{
+		font-size:20px !important;
+}
+.patient-table .v-table-table{
+	font-size: 18px !important;
+
+}
+
+.add-patient{
+	margin-left: 500px !important;
+}
+
+.search-bar{
+	width: 200px;
+	height: 40px !important;
+	margin-bottom: 10px !important;
 }

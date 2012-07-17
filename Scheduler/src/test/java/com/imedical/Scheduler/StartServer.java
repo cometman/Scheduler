@@ -9,7 +9,7 @@ public class StartServer {
 
 	private static String contextPath = "/";
 	private static String resourceBase = "src/main/webapp";
-	private static int httpPort = 8888;
+	private static int httpPort = 8887;
 
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(httpPort);

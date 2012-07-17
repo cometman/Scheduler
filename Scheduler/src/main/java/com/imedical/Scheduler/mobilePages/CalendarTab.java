@@ -8,6 +8,10 @@ import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.CalendarPanel;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.terminal.PaintException;
+import com.vaadin.terminal.PaintTarget;
+import com.vaadin.terminal.Paintable;
+import com.vaadin.terminal.Paintable.RepaintRequestListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -34,6 +38,7 @@ public class CalendarTab extends NavigationManager implements ClickListener {
 
 	}
 
+	
 	/**
 	 * Navigate to the details of this appointment
 	 * 
@@ -50,6 +55,7 @@ public class CalendarTab extends NavigationManager implements ClickListener {
 	 * @param view
 	 */
 	public void navigateBackwardCalendarView(CalendarPanel view) {
+		this.setPreviousComponent(view);
 		navigateBack();
 	}
 

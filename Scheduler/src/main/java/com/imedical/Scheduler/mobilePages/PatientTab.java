@@ -61,13 +61,22 @@ public class PatientTab extends NavigationManager {
 		});
 		searchBar.setTextChangeEventMode(TextChangeEventMode.LAZY);
 		searchBar.setInputPrompt("Search patients");
+	
 
+	}
+	
+	private void addCssStyles(){
+		patientTable.getTable().setStyleName("patient-table");
+		addPatientButton.setStyleName("add-patient");
+		searchBar.setStyleName("search-bar");
 	}
 
 	public void buildView() {
-		contentPanel.addComponent(searchBar);
 		contentPanel.addComponent(addPatientButton);
+		contentPanel.addComponent(searchBar);
 		contentPanel.addComponent(patientTable.getTable());
+	
+		addCssStyles();
 		navigateTo(contentPanel);
 
 	}

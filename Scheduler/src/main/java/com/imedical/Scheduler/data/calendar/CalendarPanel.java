@@ -34,10 +34,24 @@ public class CalendarPanel extends NavigationView {
 	private CalendarPanel previousView;
 	private CalendarPanel nextView;
 	private Calendar timeKeeper;
-
+//	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MMM dd yyyy");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE d");
+	
 	// Container for the appointment objects to be added to the screen
 	private BeanItemContainer<AppointmentEvent> appointments = new BeanItemContainer<AppointmentEvent>(
 			AppointmentEvent.class);
+	
+	// Date suffixes
+	 static String[] suffixes =
+			  //    0     1     2     3     4     5     6     7     8     9
+			     { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+			  //    10    11    12    13    14    15    16    17    18    19
+			       "th", "th", "th", "th", "th", "th", "th", "th", "th", "th",
+			  //    20    21    22    23    24    25    26    27    28    29
+			       "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+			  //    30    31
+			       "th", "st" };
+
 
 	public CalendarPanel(Date dayToView) {
 		timeKeeper = Calendar.getInstance();
@@ -54,7 +68,11 @@ public class CalendarPanel extends NavigationView {
 		}
 		verticalLayout.setSizeFull();
 		verticalLayout.setStyleName("calendar-vertical-layout");
+		verticalLayout.setSizeUndefined();
+		verticalLayout.setWidth("100%");
 		setContent(verticalLayout);
+	
+//		this.setScrollPosition(scrollPosition)
 //		buildNavigationBar();
 	}
 
@@ -64,6 +82,7 @@ public class CalendarPanel extends NavigationView {
 	 * @throws SchedulerException
 	 */
 	public void addEvents() throws SchedulerException {
+	
 
 		// Add the appointments we want to show to the container
 		for (AppointmentEvent appointment : appointmentEvents) {
@@ -98,6 +117,7 @@ public class CalendarPanel extends NavigationView {
 			panel.setStyleName("cal-appointment-button");
 			verticalLayout.addComponent(panel);
 		}
+		
 	}
 
 	public void addNewEvent(AppointmentEvent event) {
@@ -116,11 +136,14 @@ public class CalendarPanel extends NavigationView {
 	}
 
 	public void buildNavigationBar() {
+		
 		Button previousDay = new Button("Back");
 		Button nextDay = new Button("Next");
 		this.setLeftComponent(previousDay);
 		this.setRightComponent(nextDay);
-
+		
+		int day = timeKeeper.get(Calendar.DAY_OF_MONTH);
+		this.setCaption(dateFormat.format(timeKeeper.getTime())+suffixes[day]);
 		// this.getLeftComponent().setCaption("Previous");
 		// this.getRightComponent().setCaption("Next");
 
@@ -134,8 +157,6 @@ public class CalendarPanel extends NavigationView {
 				timeKeeper.set(Calendar.DAY_OF_MONTH,
 						timeKeeper.get(Calendar.DAY_OF_MONTH) - 1);
 				calTab.navigateBackwardCalendarView(createPreviousView());
-				
-
 			}
 		});
 
@@ -154,7 +175,7 @@ public class CalendarPanel extends NavigationView {
 	}
 
 	public CalendarPanel createPreviousView() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MMM dd yyyy");
+
 		// Set the calendar instance equal to the currentDate object
 		// calInstance.setTime(currentDate);
 
@@ -164,11 +185,13 @@ public class CalendarPanel extends NavigationView {
 		// currentDate = calInstance.getTime();
 
 		CalendarPanel calPanel = new CalendarPanel(timeKeeper.getTime());
-		System.out.println("From here" +timeKeeper.getTime().toString());
 		String dayCaption = dateFormat.format(timeKeeper.getTime());
+		
+		int day = timeKeeper.get(Calendar.DAY_OF_MONTH);
+		
 		calPanel.buildNavigationBar();
 
-		calPanel.setCaption(dayCaption);
+		calPanel.setCaption(dateFormat.format(timeKeeper.getTime())+suffixes[day]);
 
 		// Reference for the CalendarTab so that we can access the nav manager
 		calPanel.setTabReference(calTab);
@@ -203,7 +226,10 @@ public class CalendarPanel extends NavigationView {
 		// currentDate = calInstance.getTime();
 
 		CalendarPanel calPanel = new CalendarPanel(timeKeeper.getTime());
-		System.out.println(timeKeeper.getTime().toString());
+		
+		int day = timeKeeper.get(Calendar.DAY_OF_MONTH);
+		calPanel.setCaption(dateFormat.format(timeKeeper.getTime())+suffixes[day]);
+		
 		calPanel.buildNavigationBar();
 		// Reference for the CalendarTab so that we can access the nav manager
 		calPanel.setTabReference(calTab);

@@ -93,8 +93,10 @@ public class AppointmentView extends NavigationView { // implements
 		appointmentForm.getField("styleName").setVisible(false);
 		appointmentForm.getField("end").setVisible(false);
 		appointmentForm.getField("start").setVisible(false);
+
 		PopupDateField dateField = new PopupDateField();
 		dateField.setDateFormat("MM-dd-yyyy hh:mm");
+		dateField.setCaption("Start");
 
 		try {
 			dateField.setValue(appointmentBean.getBean().getStart());
@@ -115,14 +117,21 @@ public class AppointmentView extends NavigationView { // implements
 		durationSelect = new NativeSelect("Duration",
 				durationChoices);
 		appointmentForm.addField("start", dateField);
+		
 		appointmentForm.addField("duration", durationSelect);
 
 		panel.setFirstComponent(appointmentForm);
 		panel.setSecondComponent(saveButton);
 		saveButton.setStyleName("appointment-save-button");
-
+		this.setCssNamesForFields();
 		this.setContent(panel);
-
+	}
+	
+	private void setCssNamesForFields()
+	{
+		appointmentForm.getField("caption").setStyleName("caption-css");
+		appointmentForm.getField("description").setStyleName("description-css");
+		appointmentForm.getField("start").setStyleName("startpicker-css");
 	}
 
 	private String computeDuration(AppointmentEvent event) {
@@ -167,7 +176,6 @@ public class AppointmentView extends NavigationView { // implements
 		// Create the new appointment based on form results
 		AppointmentEvent newAppointment = new AppointmentEvent();
 		newAppointment.setPatientVO(patient);
-		newAppointment.setAllDay(false);
 		newAppointment.setCaption((String) appointmentForm.getField("caption")
 				.getValue());
 		newAppointment.setDescription((String) appointmentForm.getField(
