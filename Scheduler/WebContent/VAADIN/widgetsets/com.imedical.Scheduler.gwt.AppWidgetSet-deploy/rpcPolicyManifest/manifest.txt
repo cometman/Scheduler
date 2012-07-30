@@ -1,2 +1,0 @@
-# Module com.imedical.Scheduler.gwt.AppWidgetSet
-# RPC service class, partial path of RPC policy file
