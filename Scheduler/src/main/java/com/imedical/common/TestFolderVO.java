@@ -1,6 +1,5 @@
 package com.imedical.common;
 
-import com.imedical.box.accountTree.FileVO;
 import com.imedical.box.accountTree.FolderVO;
 
 public class TestFolderVO {

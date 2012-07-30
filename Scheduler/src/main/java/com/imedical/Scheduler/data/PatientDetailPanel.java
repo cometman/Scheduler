@@ -1,6 +1,5 @@
 package com.imedical.Scheduler.data;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,6 @@ import com.imedical.Scheduler.mobilePages.AppointmentView;
 import com.imedical.Scheduler.mobilePages.PatientDetailView;
 import com.imedical.common.SchedulerException;
 import com.imedical.model.ProviderModel;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
@@ -20,7 +17,6 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Panel;

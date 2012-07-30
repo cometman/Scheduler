@@ -3,13 +3,10 @@ package com.imedical.Scheduler.component.calendar;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.imedical.Scheduler.data.IProviderPatientDAO;
-import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.common.SchedulerErrorCodes;
 import com.imedical.common.SchedulerException;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Panel;
 
 /**
  * 

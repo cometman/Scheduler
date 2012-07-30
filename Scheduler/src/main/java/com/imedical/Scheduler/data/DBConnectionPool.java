@@ -6,9 +6,7 @@ import com.imedical.common.SchedulerException;
 import com.vaadin.addon.sqlcontainer.SQLContainer;
 import com.vaadin.addon.sqlcontainer.connection.JDBCConnectionPool;
 import com.vaadin.addon.sqlcontainer.connection.SimpleJDBCConnectionPool;
-import com.vaadin.addon.sqlcontainer.query.QueryDelegate;
 import com.vaadin.addon.sqlcontainer.query.TableQuery;
-import com.vaadin.data.Container.Filter;
 
 public class DBConnectionPool {
 	private JDBCConnectionPool jdbcPool;

@@ -1,23 +1,13 @@
 package com.imedical.Scheduler.data;
 
 import java.io.Serializable;
-import java.util.Observer;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ConversionException;
-import com.vaadin.data.Property.ReadOnlyException;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.PopupDateField;
-import com.vaadin.ui.Select;
-import com.vaadin.ui.Component.Event;
 
 public class PatientForm extends Form implements Serializable {
 

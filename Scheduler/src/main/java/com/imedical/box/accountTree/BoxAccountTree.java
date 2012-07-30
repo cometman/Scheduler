@@ -3,8 +3,6 @@ package com.imedical.box.accountTree;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 //@XStreamAlias("response")
 public class BoxAccountTree {
 

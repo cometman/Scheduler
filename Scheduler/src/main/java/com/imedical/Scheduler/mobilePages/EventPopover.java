@@ -2,7 +2,6 @@ package com.imedical.Scheduler.mobilePages;
 
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
-import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;

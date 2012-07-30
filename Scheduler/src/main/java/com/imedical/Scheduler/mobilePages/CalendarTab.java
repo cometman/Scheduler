@@ -2,16 +2,11 @@ package com.imedical.Scheduler.mobilePages;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.CalendarPanel;
 import com.imedical.model.ProviderModel;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
-import com.vaadin.terminal.Paintable;
-import com.vaadin.terminal.Paintable.RepaintRequestListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 

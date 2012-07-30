@@ -1,9 +1,5 @@
 package com.imedical.box.accountTree;
 
-import java.io.File;
-
-import com.imedical.Scheduler.data.PatientVO;
-import com.imedical.Scheduler.data.PatientVOList;
 import com.imedical.common.LogUtil;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;

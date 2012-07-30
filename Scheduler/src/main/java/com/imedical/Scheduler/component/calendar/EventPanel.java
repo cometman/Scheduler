@@ -1,9 +1,6 @@
 package com.imedical.Scheduler.component.calendar;
 
-import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;

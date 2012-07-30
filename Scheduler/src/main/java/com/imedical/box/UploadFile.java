@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.google.gwt.i18n.server.MessageCatalogFactory.Writer;
 import com.imedical.Scheduler.data.ProviderVO;
 
 public class UploadFile {

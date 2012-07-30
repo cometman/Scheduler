@@ -1,25 +1,16 @@
 package com.imedical.Scheduler.data.calendar;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.PatientContainer;
-import com.imedical.Scheduler.data.PatientVO;
-import com.vaadin.addon.calendar.event.CalendarEvent;
-import com.vaadin.addon.calendar.event.CalendarEventProvider;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
-import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClickHandler;
-import com.vaadin.ui.Component.Event;
 
 public class CalEventProvider {// implements CalendarEventProvider {
 
 	private static final long serialVersionUID = 1550248810556339270L;
 
-	private List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
+//	private List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
 	private List<AppointmentEvent> appointmentEvent = new ArrayList<AppointmentEvent>();
 	private PatientContainer patientContainer;
 	private MyVaadinApplication appReference = new MyVaadinApplication();

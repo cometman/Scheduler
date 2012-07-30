@@ -4,9 +4,10 @@ import java.rmi.RemoteException;
 
 import javax.xml.rpc.holders.StringHolder;
 
+import boxnet.holders.SOAPUserHolder;
+
 import com.imedical.Scheduler.data.ProviderVO;
 import com.imedical.box.CreateBoxSession;
-import boxnet.holders.SOAPUserHolder;
 
 public class RegisterUserBox {
 	private StringHolder status = new StringHolder();

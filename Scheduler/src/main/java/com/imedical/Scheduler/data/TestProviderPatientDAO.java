@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
-import com.imedical.Scheduler.mobilePages.AppointmentView;
 import com.imedical.common.TestData;
 import com.imedical.model.ProviderModel;
 

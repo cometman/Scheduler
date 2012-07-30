@@ -4,15 +4,13 @@ import java.util.Vector;
 
 import com.imedical.Scheduler.data.ProviderVO;
 import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalSplitPanel;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 public class RegisterWindow extends NavigationView {
 	private VerticalSplitPanel verticalPanel = new VerticalSplitPanel();

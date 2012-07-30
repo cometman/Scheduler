@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 
 import javax.xml.rpc.holders.StringHolder;
 
-import boxnet.SOAPFolder;
 import boxnet.holders.SOAPFolderHolder;
 
 import com.imedical.Scheduler.data.ProviderVO;

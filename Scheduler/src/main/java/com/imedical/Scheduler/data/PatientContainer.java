@@ -3,13 +3,9 @@ package com.imedical.Scheduler.data;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jetty.continuation.ContinuationFilter.FilteredContinuation;
-
-import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.model.ProviderModel;
 import com.vaadin.data.util.BeanItemContainer;
 

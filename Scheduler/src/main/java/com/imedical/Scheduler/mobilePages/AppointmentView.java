@@ -1,6 +1,5 @@
 package com.imedical.Scheduler.mobilePages;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,7 +7,6 @@ import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.IProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientDAOFactory;
 import com.imedical.Scheduler.data.PatientVO;
-import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.common.SchedulerErrorCodes;
 import com.imedical.common.SchedulerException;
@@ -17,13 +15,10 @@ import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.PopupDateField;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalSplitPanel;
 
 /**

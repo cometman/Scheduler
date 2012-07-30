@@ -5,22 +5,12 @@ import java.io.IOException;
 import com.imedical.Scheduler.data.PatientContainer;
 import com.imedical.Scheduler.mobilePages.LoginPage;
 import com.imedical.Scheduler.mobilePages.MainTabSheet;
-import com.imedical.Scheduler.mobilePages.PatientTab;
 import com.imedical.Scheduler.mobilePages.RegisterWindow;
 import com.imedical.common.PropertyLoader;
 import com.imedical.controller.Controller;
 import com.imedical.model.ProviderModel;
-import com.vaadin.addon.touchkit.ui.NavigationBar;
-import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.TouchKitApplication;
 import com.vaadin.addon.touchkit.ui.TouchKitWindow;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer.ComponentAttachEvent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet.Tab;
-import com.vaadin.ui.Window;
 
 /**
  * The Application's "main" class

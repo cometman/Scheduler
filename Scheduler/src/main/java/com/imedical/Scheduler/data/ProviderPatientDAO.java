@@ -6,11 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
@@ -18,7 +15,6 @@ import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.box.BoxIOData;
 import com.imedical.box.Box_Finals;
-import com.imedical.box.CreateBoxSession;
 import com.imedical.box.IBoxIOData;
 import com.imedical.box.accountTree.FileVO;
 import com.imedical.box.accountTree.FolderVO;
@@ -28,13 +24,6 @@ import com.imedical.common.PropertyLoader;
 import com.imedical.model.ProviderModel;
 import com.thoughtworks.xstream.XStream;
 import com.vaadin.addon.sqlcontainer.SQLContainer;
-import com.vaadin.addon.sqlcontainer.filters.Like;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.filter.And;
 import com.vaadin.data.util.filter.Compare;
 
 public class ProviderPatientDAO implements IProviderPatientDAO {

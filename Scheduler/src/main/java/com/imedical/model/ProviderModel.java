@@ -1,40 +1,19 @@
 package com.imedical.model;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.PropertyException;
-
-import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.IProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientDAOFactory;
-import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderVO;
-import com.imedical.Scheduler.data.TestProviderPatientDAO;
 import com.imedical.Scheduler.data.calendar.AppointmentEvent;
 import com.imedical.box.BoxIOData;
 import com.imedical.box.Box_Finals;
 import com.imedical.box.IBoxIOData;
 import com.imedical.box.accountTree.FileVO;
 import com.imedical.box.accountTree.FolderVO;
-import com.imedical.box.userregistration.RegisterNewUser;
-import com.imedical.box.userregistration.RegisterUserBox;
-import com.imedical.common.LogUtil;
 import com.imedical.common.PropertyLoader;
-import com.vaadin.data.Item.PropertySetChangeEvent;
-import com.vaadin.data.Item.PropertySetChangeListener;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.AbstractSelect.NewItemHandler;
-import com.vaadin.ui.Window.Notification;
 
 public class ProviderModel {
 	private ProviderVO provider;

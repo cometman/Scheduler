@@ -2,16 +2,14 @@ package com.imedical.Scheduler.mobilePages;
 
 import com.imedical.Scheduler.MyVaadinApplication;
 import com.imedical.Scheduler.data.IProviderPatientDAO;
-import com.imedical.Scheduler.data.PatientDetailPanel;
 import com.imedical.Scheduler.data.PatientForm;
 import com.imedical.Scheduler.data.PatientVO;
 import com.imedical.Scheduler.data.ProviderPatientDAO;
 import com.imedical.model.ProviderModel;
-
 import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 
